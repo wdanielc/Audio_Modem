@@ -12,12 +12,20 @@ def OFDM():
     pass
 
 
-def QAM(in, num): #1 = 4QAM, 2=16QAM, ...
-    a = in % (1 << num)
-    b = in >> (num)
-    a = 1 - 2**num + 2*grey(a,num)
-    b = 1 - 2**num + 2*grey(b,num)
-    return (a + b*i)    #close butt no cigar
+def QAM(var, num): #1 = 4QAM, 2=16QAM, ...
+    a = var % (1 << num)
+    b = var >> (num)
+    a = 1 - 2**num + 2*bin2grey(a)
+    b = 1 - 2**num + 2*bin2grey(b)
+    return complex(a,b)
 
-def grey(in,num): #todo
-    pass
+def bin2grey(var):
+    return(var ^ (var >> 1))
+
+
+def grey2bin(var):
+    mask = var >> 1
+    while mask != 0:
+        var = var ^ mask
+        mask = mask >> 1
+    return var
