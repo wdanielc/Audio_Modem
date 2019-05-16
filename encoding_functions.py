@@ -33,8 +33,15 @@ def grey2bin(var):
     return var
 
 def upconvert(symbol,Fc,Ts):
-    transmit = []
     freq = 2 * np.pi * Fc * Ts
-    for i in range(len(symbol)):
-        transmit.append(symbol[i].real * np.cos(i * freq) + symbol[i].imag * np.sin(i * freq))
+
+    sin = np.sin(freq * np.arange(len(symbol)))
+    cos = np.cos(freq * np.arange(len(symbol)))
+    transmit = symbol.real * cos + symbol.imag * sin
+
     return transmit
+
+# Interpolates so the actual playback time is the one corresponding to T (zero order hold)
+def interpolate(symbol, fs, T):
+    repeats = T*fs/len(symbol)+1
+    return np.repeat(symbol, repeats)
