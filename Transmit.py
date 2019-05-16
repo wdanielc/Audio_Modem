@@ -41,6 +41,10 @@ for block in data:
     for value in encode.OFDM(symbol, 2):
         transmit.append(value)
 
+plt.figure()
+f, psd = signal.welch(transmit, fs, nperseg=1024)
+plt.plot(f, 20*np.log10(psd))
+
 Ts = 1/fs
 transmit = encode.upconvert(np.array(transmit), Fc, Ts)
 
