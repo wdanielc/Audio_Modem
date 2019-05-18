@@ -9,7 +9,7 @@ def bits2values():
 
 
 def OFDM(symbol,Lp,Fc,Fs,dF):
-    spectrum = np.zeros(int(Fs/dF))
+    spectrum = np.zeros(int(Fs/dF),dtype=complex)
     
     sigstart = (Fc/dF) - (len(symbol)/2) #this isnt *exactly* centred on Fc, but oh well
     sigstart = int(round(sigstart))
@@ -21,6 +21,7 @@ def OFDM(symbol,Lp,Fc,Fs,dF):
     
     trans = np.fft.ifft(spectrum)
     trans = np.insert(trans, 0, trans[-Lp:])
+    trans = np.real(trans) #ifft isnt perfect
     return trans
 
 QAM_norm = [2,10,42]
