@@ -8,8 +8,12 @@ def bits2values():
     pass
 
 
-def OFDM(symbol,Lp):
-    trans = np.fft.ifft(symbol)
+def OFDM(symbol,Lp,Fc,Fs):
+
+    spectrum = np.zeros(Fs)
+    spectrum[Fc - int(np.ceil(len(symbol)/2)) : Fc + int(np.floor(len(symbol)/2))] = symbol
+
+    trans = np.fft.ifft(spectrum)
     trans = np.insert(trans, 0, trans[-Lp:])
     return trans
 

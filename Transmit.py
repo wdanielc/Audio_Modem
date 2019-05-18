@@ -12,46 +12,37 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import data_input as data
 
-filename = "test.txt"
+filename = "hamlet.txt"
 
-symbol_length = 16
+symbol_length = 10192
 volume = 1.0
 fs = 44100
 
 Fc = 10000 # Carrier frequency
-dF = 10
+dF = 1
 T = 1/dF
-QAM = 1
+QAM = 2
 
 # This is a list of QAM values of the data
 QAM_values = data.modulate(data.get_data(filename), QAM)
 
-transmit = np.zeros(int(np.ceil(len(QAM_values)/symbol_length)))
+print(len(QAM_values))
 
-for i in range(len(transmit)):
+transmit = np.array([])
+
+for i in range(int(np.ceil(len(QAM_values)/symbol_length))):
     block = QAM_values[i * symbol_length:(i + 1) * symbol_length]
 
     ### The block of QAM values needs to be turned into a series of OFDM symbols
-    #transmit[i] = encode.OFDM(block)
+    transmit = np.append(transmit, encode.OFDM(block, 300, Fc, fs))
 
-"""
-plt.figure()
-f, psd = signal.welch(transmit, fs, nperseg=1024)
-plt.plot(f, 20*np.log10(psd))
-
-Ts = 1/fs
-transmit = encode.upconvert(np.array(transmit), Fc, Ts)
-
-transmit = np.array(transmit,dtype=np.float32) # Convert to correct data type for playback
-
-#plt.figure()
-#plt.plot(np.arange(len(transmit)), transmit)
+print(len(transmit))
 
 plt.figure()
 f, psd = signal.welch(transmit, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
+
 
 audio.play(transmit, volume, fs)
 
 plt.show()
-"""
