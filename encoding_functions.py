@@ -8,11 +8,17 @@ def bits2values():
     pass
 
 
-def OFDM(symbol,Lp,Fc,Fs):
-
-    spectrum = np.zeros(Fs)
-    spectrum[Fc - int(np.ceil(len(symbol)/2)) : Fc + int(np.floor(len(symbol)/2))] = symbol
-
+def OFDM(symbol,Lp,Fc,Fs,dF):
+    spectrum = np.zeros(int(Fs/dF))
+    
+    sigstart = (Fc/dF) - (len(symbol)/2) #this isnt *exactly* centred on Fc, but oh well
+    sigstart = int(round(sigstart))
+    sigend = sigstart + len(symbol)
+    
+    spectrum[sigstart:sigend] = symbol
+    spectrum = np.conj(spectrum[::-1]) #this is earier than working out the correct indicies to insert the mirrored symbol
+    spectrum[sigstart:sigend] = symbol
+    
     trans = np.fft.ifft(spectrum)
     trans = np.insert(trans, 0, trans[-Lp:])
     return trans
