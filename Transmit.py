@@ -8,39 +8,33 @@ Created on Mon May 13 14:15:46 2019
 import encoding_functions as encode
 import audio_functions as audio
 import numpy as np
-from random import randrange
 import matplotlib.pyplot as plt
 from scipy import signal
+import data_input as data
 
-symbol_length = 32
+filename = "test.txt"
+
+symbol_length = 16
 volume = 1.0
 fs = 44100
 
 Fc = 10000 # Carrier frequency
 dF = 10
 T = 1/dF
-QAM = 2 # This doesn't fully work yet, leave as 2
+QAM = 1
 
-# Get random string to test the modulation
-letters = "".join(chr(randrange(127)) for i in range(1000))
-data = bytes(letters, 'ascii')
-transmit = []
+# This is a list of QAM values of the data
+QAM_values = data.modulate(data.get_data(filename), QAM)
 
-# Slice the text into chunks of the correct length (for symbols)
-data = [data[i:i+int(symbol_length/((4**QAM)/8))] for i in range(0,len(data),int(symbol_length/((4**QAM)/8)))]
+transmit = np.zeros(int(np.ceil(len(QAM_values)/symbol_length)))
 
-# Encode the data with QAM
-for block in data:
-    symbol = np.zeros(symbol_length, dtype=np.complex)
-    for i in range(0,len(block)*2,2):
-        symbol[i] = encode.QAM(block[int(i/2)] >> 4, 2)
-        symbol[i+1] = encode.QAM(block[int(i/2)] % 16, 2)
-    # This makes sure on playback each symbol takes T seconds
-    symbol = encode.interpolate(symbol, fs, T)
-    # OFDM the symbol and prepare to transmit
-    for value in encode.OFDM(symbol, 2):
-        transmit.append(value)
+for i in range(len(transmit)):
+    block = QAM_values[i * symbol_length:(i + 1) * symbol_length]
 
+    ### The block of QAM values needs to be turned into a series of OFDM symbols
+    #transmit[i] = encode.OFDM(block)
+
+"""
 plt.figure()
 f, psd = signal.welch(transmit, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
@@ -60,3 +54,4 @@ plt.plot(f, 20*np.log10(psd))
 audio.play(transmit, volume, fs)
 
 plt.show()
+"""
