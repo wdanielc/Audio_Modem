@@ -9,7 +9,7 @@ fs = 44100
 
 samples = [] # this will hold the recorded samples
 # THE TRESHOLD VALUE IS HEURISTIC AND YOU MAY WANT TO PLAY WITH IT...
-threshold = 15.0 # experimented with this empirically- 15 seems like a good value at least with my equipment- Andreas
+threshold = 5# experimented with this empirically- 15 seems like a good value at least with my equipment- Andreas
 background_power = 0.0 # mean power before the signal starts (to be measured)
 L_init_samples = fs # number of initial samples to determine background mean power
 # the recorder state variable tells the callback function in what phase it is and
