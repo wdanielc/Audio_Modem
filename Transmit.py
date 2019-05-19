@@ -16,17 +16,25 @@ import data_input as data
 import wave
 
 filename = "hamlet.txt"
+Modulation_type_OFDM = False   #True for OFDM, False for DMT
 
 volume = 1.0
-fs = 44100
+fs = 20000
 
 
 Fc = 10000 # Carrier frequency
 dF = 10
 T = 1/dF
 QAM = 2
-symbol_length = 1024
+OFDM_symbol_length = 1024
+DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
+
+
+if Modulation_type_OFDM:
+	symbol_length = OFDM_symbol_length
+else:
+	symbol_length = DMT_symbol_length
 
 
 #transmit = np.array([])
@@ -49,8 +57,6 @@ def callback(in_data, frame_count, time_info, status): #callback function to con
 QAM_values = data.modulate(data.get_data(filename), QAM)
 QAM_values = np.append(QAM_values, np.zeros(symbol_length - len(QAM_values) % symbol_length))
 
-transmit = np.zeros(int((len(QAM_values)/symbol_length) * (fs/dF + Lp)))
-
 #p = pa.PyAudio()
 
 
@@ -69,14 +75,23 @@ stream = p.open(format=pa.paFloat32,
                 output=True)'''
 
 
-print("Starting OFDM")
-for i in range(int(len(QAM_values)/symbol_length)):
-	block = QAM_values[i * symbol_length:(i + 1) * symbol_length]
-	'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
-	transmit[i * int(fs/dF + Lp): (i+1) * int(fs/dF + Lp)] = encode.OFDM(block, Lp, Fc, fs, dF)
+transmit = np.zeros(int((len(QAM_values)/symbol_length) * (fs/dF + Lp)))
+
+if Modulation_type_OFDM:
+	print("Starting OFDM")
+	for i in range(int(len(QAM_values)/symbol_length)):
+		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
+		transmit[i * int(fs/dF + Lp): (i+1) * int(fs/dF + Lp)] = encode.OFDM(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp, Fc, fs, dF)
+else:
+	print('Starting DMT')
+	for i in range(int(len(QAM_values)/symbol_length)):
+		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
+		transmit[i * int(fs/dF + Lp): (i+1) * int(fs/dF + Lp)] = encode.DMT(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp)
 
 
-transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
+
+
+#transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
 
 """
 stream.stop_stream()
