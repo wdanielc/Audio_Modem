@@ -70,32 +70,32 @@ stream = p.open(format=pa.paFloat32,
 				frames_per_buffer=int(transmit_block_length),
 				stream_callback=callback
 				)'''
-'''stream = p.open(format=pa.paFloat32,
+stream = p.open(format=pa.paFloat32,
                 channels=1,
                 rate=fs,
-                output=True)'''
+                output=True)
 
 
 
 for i in range(0,int(len(QAM_values)/symbol_length)):
 	block = np.array(QAM_values[i * symbol_length:(i + 1) * symbol_length])
-	'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
-	transmit = np.append(transmit, encode.DMT(block, 350))
+	stream.write(volume*np.tile(encode.DMT(block, 350),4))
+	'''transmit = np.append(transmit, encode.DMT(block, 350))
 
 
-'''transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
+transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
 
 
 while stream.is_active():
 	time.sleep(0.1)'''
 
 
-'''stream.stop_stream()
+stream.stop_stream()
 stream.close()
-p.terminate()'''
+p.terminate()
 
 
-plt.figure()
+'''plt.figure()
 f, psd = signal.welch(transmit, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
 
@@ -105,4 +105,4 @@ print(transmit)
 audio.play(transmit, volume, fs)
 
 
-plt.show()
+plt.show()'''

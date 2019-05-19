@@ -27,7 +27,7 @@ def OFDM(symbol,Lp,Fc,Fs,dF):
 def DMT(symbol, Lp):      #2*len(symbol)+2 samples in freq domain = Fs*1/dF samples in time domain
     spectrum = np.append(symbol,np.conj(np.flip(symbol)))
     spectrum = np.insert(spectrum, [0,len(symbol)], 0)
-    trans = np.fft.ihfft(spectrum)
+    trans = np.fft.ifft(spectrum)
     trans = np.real(trans)  #ifft isnt perfect
     trans = np.insert(trans, 0, trans[-Lp:])
     return trans
