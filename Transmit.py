@@ -62,8 +62,8 @@ stream = p.open(format=pa.paFloat32,
 				output=True, 
 				frames_per_buffer=int(transmit_block_length),
 				stream_callback=callback
-				)'''
-'''stream = p.open(format=pa.paFloat32,
+				)
+stream = p.open(format=pa.paFloat32,
                 channels=1,
                 rate=fs,
                 output=True)'''
@@ -76,18 +76,16 @@ for i in range(int(len(QAM_values)/symbol_length)):
 	transmit[i * int(fs/dF + Lp): (i+1) * int(fs/dF + Lp)] = encode.OFDM(block, Lp, Fc, fs, dF)
 
 
-'''transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
+transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
 
-
-while stream.is_active():
-	time.sleep(0.1)'''
-
-
-'''stream.stop_stream()
+"""
+stream.stop_stream()
 stream.close()
-p.terminate()'''
+p.terminate()
+"""
 
 plt.figure()
+
 f, psd = signal.welch(transmit, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
 
