@@ -17,7 +17,7 @@ import pyaudio as pa
 filename = "hamlet.txt"
 
 volume = 1.0
-fs = 44100
+fs = 20980
 
 
 Fc = 10000 # Carrier frequency

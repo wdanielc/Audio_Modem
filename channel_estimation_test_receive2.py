@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 import audio_functions
 import time
 
-fs = 44100
+fs = 2250    # needs to be divisible by 2dF
 
 samples = [] # this will hold the recorded samples
 # THE TRESHOLD VALUE IS HEURISTIC AND YOU MAY WANT TO PLAY WITH IT...
-threshold = 5# experimented with this empirically- 15 seems like a good value at least with my equipment- Andreas
+threshold = 10# you have to play with this based on room/equipment, 5-15 tends to be the range of useful values
 background_power = 0.0 # mean power before the signal starts (to be measured)
 L_init_samples = fs # number of initial samples to determine background mean power
 # the recorder state variable tells the callback function in what phase it is and

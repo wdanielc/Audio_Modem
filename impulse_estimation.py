@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import audio_functions
 import time
 
-fs = 44100
+fs = 20980
 
 samples = [] # this will hold the recorded samples
 # THE TRESHOLD VALUE IS HEURISTIC AND YOU MAY WANT TO PLAY WITH IT...
