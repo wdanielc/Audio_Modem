@@ -13,7 +13,7 @@ def play(samples, volume, fs):
     stream.close()
     p.terminate()
 
-
+"""
 def record(duration, fs, buffer_length):
     p = pa.PyAudio()
     stream = p.open(format=pa.paFloat32, channels=1, rate=fs, input=True, frames_per_buffer = buffer_length)
@@ -48,4 +48,4 @@ def callback(in_data, frame_count, time_info, status):
             recorder_state = 'completed'
         else:
             samples.extend(mysamples)
-    return(in_data, pa.paContinue) # returning is compulsory even in playback mode
+    return(in_data, pa.paContinue) # returning is compulsory even in playback mode"""
