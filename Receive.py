@@ -42,14 +42,18 @@ else:
 
 transmitted_QAM = data.modulate(data.get_data('hamlet_semiabridged.txt'), QAM, OFDM_symbol_length*2*QAM)
 
-QAM_values = np.zeros(int((len(receive)*symbol_length)/((fs/dF) + Lp)), dtype = np.complex)	#initialises QAM value vector of correct length
+data_bits = data.get_data('hamlet_semiabridged.txt') 
+frame_length_bits = symbol_length*2*QAM
+transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 
+QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
+frame_length_samples = int(fs/dF) + Lp
 
 if Modulation_type_OFDM:
-	for i in range(int(len(QAM_values)/symbol_length)):
-		QAM_values[int(i*symbol_length):int((i+1)*symbol_length)] = decode.OFDM(receive[int(i*((fs/dF) + Lp)):int((i+1)*((fs/dF) + Lp))],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
+	for i in range(transmit_frames):
+		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
 
-print(transmitted_QAM[9216:])
+print(sum(abs(transmitted_QAM-QAM_values)))
 
 plt.figure()
 

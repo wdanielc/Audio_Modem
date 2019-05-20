@@ -75,7 +75,7 @@ stream = p.open(format=pa.paFloat32,
 # This is a list of QAM values of the data
 data_bits = data.get_data(filename)
 frame_length_bits = symbol_length*2*QAM
-transmit_frames = int(len(data_bits)/frame_length_bits)
+transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 frame_length_samples = int(fs/dF) + Lp
 
 QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
