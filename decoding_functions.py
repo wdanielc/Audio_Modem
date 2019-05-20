@@ -2,7 +2,7 @@ import numpy as np
 
 def OFDM(received,gains,symbol_length,Lp,Fc,Fs,dF):
     trans = np.array(received[Lp:])
-    spectrum = np.fft.rfft(trans)
+    spectrum = np.fft.fft(trans)
     
     sigstart = (Fc/dF) - symbol_length/2 #this isnt *exactly* centred on Fc, but oh well
     sigstart = int(round(sigstart))

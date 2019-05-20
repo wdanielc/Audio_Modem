@@ -32,7 +32,7 @@ DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
 
 
-receive = channel.get_received()
+receive = channel.get_received(sigma=0.0, h=True, ISI=False)
 
 
 if Modulation_type_OFDM:
@@ -41,15 +41,22 @@ else:
 	symbol_length = DMT_symbol_length
 
 
-QAM_values = np.zeros(int((len(receive)*symbol_length)/((fs/dF) + Lp)))	#initialises QAM value vector of correct length
+
+QAM_values = np.zeros(int((len(receive)*symbol_length)/((fs/dF) + Lp)), dtype = np.complex)	#initialises QAM value vector of correct length
 
 
 if Modulation_type_OFDM:
 	for i in range(int(len(QAM_values)/symbol_length)):
-		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*((fs/dF) + Lp):(i+1)*((fs/dF) + Lp)],np.ones(fs/dF),symbol_length,Lp,Fc,fs,dF)
+		QAM_values[int(i*symbol_length):int((i+1)*symbol_length)] = decode.OFDM(receive[int(i*((fs/dF) + Lp)):int((i+1)*((fs/dF) + Lp))],np.ones(int(fs/dF)),symbol_length,Lp,Fc,fs,dF)
 
 print(QAM_values)
 
+plt.figure()
+
+f, psd = signal.welch(receive, fs, nperseg=1024)
+plt.plot(f, 20*np.log10(psd))
+
+plt.show()
 
 
 
