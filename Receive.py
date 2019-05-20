@@ -40,7 +40,7 @@ if Modulation_type_OFDM:
 else:
 	symbol_length = DMT_symbol_length
 
-
+transmitted_QAM = data.modulate(data.get_data('hamlet_semiabridged.txt'), QAM, OFDM_symbol_length*2*QAM)
 
 QAM_values = np.zeros(int((len(receive)*symbol_length)/((fs/dF) + Lp)), dtype = np.complex)	#initialises QAM value vector of correct length
 
@@ -49,7 +49,7 @@ if Modulation_type_OFDM:
 	for i in range(int(len(QAM_values)/symbol_length)):
 		QAM_values[int(i*symbol_length):int((i+1)*symbol_length)] = decode.OFDM(receive[int(i*((fs/dF) + Lp)):int((i+1)*((fs/dF) + Lp))],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
 
-print(QAM_values)
+print(transmitted_QAM[9216:])
 
 plt.figure()
 
