@@ -7,18 +7,18 @@ def get_data(file):
 
     with open(file, 'rb') as fin:
         data = fin.read()
-
+    
     return bytes2bits(data)
 
 
 """This takes a bit stream (np array) and returns an array of QAM symbols. """
-def modulate(bits, QAM):
+def modulate(bits, QAM, frame_length_bits):
     bits_per_value = 2 * QAM
     # Append a buffer of zeros to make the bit stream the correct length
-    if len(bits) % bits_per_value == 0:
+    if len(bits) % frame_length_bits == 0:
         pass
     else:
-        bits = np.append(bits, np.zeros(bits_per_value - (len(bits) % bits_per_value)))
+        bits = np.append(bits, np.zeros(frame_length_bits - (len(bits) % frame_length_bits)))
     # Split into blocks for each QAM value
     bits = np.array([bits[i:i+bits_per_value] for i in range(0, len(bits), bits_per_value)], dtype=np.int64)
     # Convert to ints

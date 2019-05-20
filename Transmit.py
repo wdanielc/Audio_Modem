@@ -6,7 +6,7 @@ Created on Mon May 13 14:15:46 2019
 @author: wdc24
 """
 import encoding_functions as encode
-import audio_functions as audio
+#import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -16,11 +16,11 @@ import data_input as data
 import wave
 
 filename = "hamlet.txt"
-Modulation_type_OFDM = False   #True for OFDM, False for DMT
+Modulation_type_OFDM = False  #True for OFDM, False for DMT
 
 volume = 1.0
 OFDM_Fs = 44100
-DMT_Fs = 2000
+DMT_Fs = 20000
 
 
 Fc = 10000 # Carrier frequency
@@ -75,24 +75,23 @@ stream = p.open(format=pa.paFloat32,
 # This is a list of QAM values of the data
 data_bits = data.get_data(filename)
 frame_length_bits = symbol_length*2*QAM
-transmit_frames = int(length(data_bits)/frame_length_bits)
+transmit_frames = int(len(data_bits)/frame_length_bits)
 frame_length_samples = int(fs/dF) + Lp
 
-QAM_values = data.modulate(data_bits, QAM)
-QAM_values = np.append(QAM_values, np.zeros(symbol_length - len(QAM_values) % symbol_length))
+QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
 
-transmit = np.zeros(int((len(QAM_values)/symbol_length) * (fs/dF + Lp)))
+transmit = np.zeros(transmit_frames * frame_length_samples)
 
 if Modulation_type_OFDM:
 	print("Starting OFDM")
-	for i in range(int(len(QAM_values)/symbol_length)):
+	for i in range(transmit_frames):
 		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
-		transmit[i * int(fs/dF + Lp): (i+1) * int(fs/dF + Lp)] = encode.OFDM(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp, Fc, fs, dF)
+		transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp, Fc, fs, dF)
 else:
 	print('Starting DMT')
-	for i in range(int(len(QAM_values)/symbol_length)):
+	for i in range(transmit_frames):
 		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
-		transmit[i * int(fs/dF + Lp): (i+1) * int(fs/dF + Lp)] = encode.DMT(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp)
+		transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.DMT(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp)
 
 
 
@@ -122,7 +121,7 @@ wf.setframerate(fs)
 wf.writeframes(b''.join(samples))
 wf.close()
 
-audio.play(transmit, volume, fs)
+#audio.play(transmit, volume, fs)
 
 
 plt.show()
