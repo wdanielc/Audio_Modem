@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import data_input as data
 import wave
+import channel
 
 
 filename = "hamlet_output.txt"	#file to save to
@@ -31,7 +32,7 @@ DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
 
 
-receive = np.array()
+receive = channel.get_received()
 
 
 if Modulation_type_OFDM:
@@ -45,7 +46,9 @@ QAM_values = np.zeros(int((len(receive)*symbol_length)/((fs/dF) + Lp)))	#initial
 
 if Modulation_type_OFDM:
 	for i in range(int(len(QAM_values)/symbol_length)):
-		QAM_values[i*symbol_length:(i+1)*symbol_length] = 
+		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*((fs/dF) + Lp):(i+1)*((fs/dF) + Lp)],np.ones(fs/dF),symbol_length,Lp,Fc,fs,dF)
+
+print(QAM_values)
 
 
 
