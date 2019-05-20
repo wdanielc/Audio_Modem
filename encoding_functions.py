@@ -8,8 +8,7 @@ def OFDM(symbol,Lp,Fc,Fs,dF):
     sigend = sigstart + len(symbol)
     
     spectrum[sigstart:sigend] = symbol
-    spectrum = np.conj(spectrum[::-1]) #this is earier than working out the correct indicies to insert the mirrored symbol
-    spectrum[sigstart:sigend] = symbol
+    spectrum[(1-sigend):(1-sigstart)] = np.flip(np.conj(symbol))
     
     trans = np.fft.ifft(spectrum)
     trans = np.insert(trans, 0, trans[-Lp:])
