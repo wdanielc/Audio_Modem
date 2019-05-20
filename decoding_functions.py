@@ -1,6 +1,6 @@
 import numpy as np
 
-def OFDM(received,gains,symbol_length,Lp,Fc,Fs,dF):
+def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     trans = np.array(received[Lp:])
     spectrum = np.fft.fft(trans)
     
