@@ -121,12 +121,9 @@ wf.setframerate(fs)
 wf.writeframes(b''.join(samples))
 wf.close()
 
-file = open("transmit.txt", "w")
-
-for value in transmit:
-	file.write(str(value) + "\n")
-
-file.close()
+with open("transmit.txt", 'w') as fout:
+	for value in transmit:
+		fout.write(str(value) + '\n')
 
 #audio.play(transmit, volume, fs)
 
