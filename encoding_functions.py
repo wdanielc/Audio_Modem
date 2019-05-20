@@ -1,13 +1,5 @@
 import numpy as np
 
-class Constellation():
-    pass
-
-
-def bits2values():
-    pass
-
-
 def OFDM(symbol,Lp,Fc,Fs,dF):
     spectrum = np.zeros(int(Fs/dF),dtype=complex)
     
@@ -51,16 +43,17 @@ def grey2bin(var):
         mask = mask >> 1
     return var
 
-def upconvert(symbol,Fc,Ts):
-    freq = 2 * np.pi * Fc * Ts
 
-    sin = np.sin(freq * np.arange(len(symbol)))
-    cos = np.cos(freq * np.arange(len(symbol)))
-    transmit = symbol.real * cos + symbol.imag * sin
-
-    return transmit
-
-# Interpolates so the actual playback time is the one corresponding to T (zero order hold)
-def interpolate(symbol, fs, T):
-    repeats = T*fs/len(symbol)+1
-    return np.repeat(symbol, repeats)
+def Synch_prefix(symbol_length,Lp,Fc,Fs,dF):
+    randbits1 = np.random.randint(0,4,size=2*symbol_length)
+    randbits2 = np.random.randint(0,4,size=2*symbol_length)
+    randQAM1 = np.zeros(symbol_length,dtype=complex)
+    randQAM2 = np.zeros(symbol_length,dtype=complex)
+    for i in range(symbol_length):
+        randQAM2[i] = QAM(randbits2[i],1)
+        if i % 2 == 0:
+            randQAM1[i] = QAM(randbits1[i],1)
+    out1 = OFDM(randQAM1,Lp,Fc,Fs,dF)
+    out2 = OFDM(randQAM2,Lp,Fc,Fs,dF)
+    return np.concatenate((out1,out2))
+    
