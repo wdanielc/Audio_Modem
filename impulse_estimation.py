@@ -36,7 +36,7 @@ def callback(in_data, frame_count, time_info, status):
     mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
 
     if recorder_state == 'acquiring':
-        print(mysamples)
+        #print(mysamples)
         samples.extend(mysamples)
         if len(samples) > L_init_samples:
             background_power = np.mean(np.array(samples)**2)
@@ -44,7 +44,7 @@ def callback(in_data, frame_count, time_info, status):
     elif recorder_state == 'waiting':
         mypower = np.mean(mysamples**2)
         if mypower > threshold*background_power:
-            print(mysamples)
+            #print(mysamples)
             samples = mysamples.tolist()
             recorder_state = 'recording'
     elif recorder_state == 'recording':
@@ -93,6 +93,10 @@ stream.stop_stream()
 stream.close()
 p.terminate()
 
-plt.plot(samples)
-plt.grid()
-plt.show()
+def get_h():
+    return samples
+
+if __name__ == "__main__":
+    plt.plot(samples)
+    plt.grid()
+    plt.show()
