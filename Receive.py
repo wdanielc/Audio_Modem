@@ -47,7 +47,7 @@ QAM_values = np.zeros(int((len(receive)*symbol_length)/((fs/dF) + Lp)), dtype = 
 
 if Modulation_type_OFDM:
 	for i in range(int(len(QAM_values)/symbol_length)):
-		QAM_values[int(i*symbol_length):int((i+1)*symbol_length)] = decode.OFDM(receive[int(i*((fs/dF) + Lp)):int((i+1)*((fs/dF) + Lp))],np.ones(int(fs/dF)),symbol_length,Lp,Fc,fs,dF)
+		QAM_values[int(i*symbol_length):int((i+1)*symbol_length)] = decode.OFDM(receive[int(i*((fs/dF) + Lp)):int((i+1)*((fs/dF) + Lp))],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
 
 print(QAM_values)
 
