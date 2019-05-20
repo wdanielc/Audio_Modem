@@ -15,8 +15,8 @@ import data_input as data
 #import pyaudio as pa
 import wave
 
-filename = "hamlet.txt"
-Modulation_type_OFDM = False  #True for OFDM, False for DMT
+filename = "hamlet_semiabridged.txt"
+Modulation_type_OFDM = True  #True for OFDM, False for DMT
 
 volume = 1.0
 OFDM_Fs = 44100
@@ -120,6 +120,13 @@ wf.setsampwidth(2) # 2 bytes per sample int16. If unsure, use np.dtype(np.int16)
 wf.setframerate(fs)
 wf.writeframes(b''.join(samples))
 wf.close()
+
+file = open("transmit.txt", "w")
+
+for value in transmit:
+	file.write(str(value) + "\n")
+
+file.close()
 
 #audio.play(transmit, volume, fs)
 
