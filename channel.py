@@ -1,8 +1,9 @@
 import numpy as np
 
-def isi_channel(input, sigma, ISI=True, noise=True):
-    import impulse_estimation as estimate
-    h = estimate.get_h()
+def isi_channel(input, sigma, h=True, ISI=True, noise=True):
+    if h:
+        import impulse_estimation as estimate
+        h = estimate.get_h()
 
     output = input
     if ISI:
