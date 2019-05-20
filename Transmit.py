@@ -19,7 +19,8 @@ filename = "hamlet.txt"
 Modulation_type_OFDM = False   #True for OFDM, False for DMT
 
 volume = 1.0
-fs = 20000
+OFDM_Fs = 44100
+DMT_Fs = 2000
 
 
 Fc = 10000 # Carrier frequency
@@ -27,14 +28,16 @@ dF = 10
 T = 1/dF
 QAM = 2
 OFDM_symbol_length = 1024
-DMT_symbol_length = int(((fs/dF)-2)/2)
+DMT_symbol_length = int(((DMT_Fs/dF)-2)/2)
 Lp = 350
 
 
 if Modulation_type_OFDM:
 	symbol_length = OFDM_symbol_length
+	fs = OFDM_Fs
 else:
 	symbol_length = DMT_symbol_length
+	fs = DMT_Fs
 
 
 #transmit = np.array([])
@@ -51,11 +54,6 @@ def callback(in_data, frame_count, time_info, status): #callback function to con
 	print(data)
 	transmit_location += frame_count
 	return(data, pa.paContinue)'''
-
-
-# This is a list of QAM values of the data
-QAM_values = data.modulate(data.get_data(filename), QAM)
-QAM_values = np.append(QAM_values, np.zeros(symbol_length - len(QAM_values) % symbol_length))
 
 #p = pa.PyAudio()
 
@@ -74,6 +72,14 @@ stream = p.open(format=pa.paFloat32,
                 rate=fs,
                 output=True)'''
 
+# This is a list of QAM values of the data
+data_bits = data.get_data(filename)
+frame_length_bits = symbol_length*2*QAM
+transmit_frames = int(length(data_bits)/frame_length_bits)
+frame_length_samples = int(fs/dF) + Lp
+
+QAM_values = data.modulate(data_bits, QAM)
+QAM_values = np.append(QAM_values, np.zeros(symbol_length - len(QAM_values) % symbol_length))
 
 transmit = np.zeros(int((len(QAM_values)/symbol_length) * (fs/dF + Lp)))
 
@@ -106,7 +112,8 @@ plt.plot(f, 20*np.log10(psd))
 
 filename = 'myAudioFile.wav'
 # save result to file
-samples = (.25*transmit+.25)*(2**15)
+samples = transmit/max(abs(transmit))
+samples = (.5*transmit+.5)*(2**14)
 samples = samples.astype(np.int16)
 wf = wave.open(filename, 'wb')
 wf.setnchannels(1)

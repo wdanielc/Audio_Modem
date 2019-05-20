@@ -38,7 +38,7 @@ def bytes2bits(y):
         x.pop(0)
     for k in range(r):
         x.pop()
-    return np.array(x)
+    return np.array(x, dtype=bool)
 
 
 def bits2ints(y):
