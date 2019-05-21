@@ -1,4 +1,5 @@
 import numpy as np
+from encoding_functions import grey2bin
 
 def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     trans = np.array(received[Lp:])
@@ -11,6 +12,35 @@ def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     scaled_symbol = spectrum[sigstart:sigend]	#input signal scaled by complex channel gains
     symbol = np.divide(scaled_symbol,gains[sigstart:sigend])
     return symbol
+
+QAM_norm = [2,10,42]
+
+def QAM_nearest_neighbour(value, num):
+    value *= QAM_norm[num-1]**0.5
+
+    # Round to the nearest odd number
+    a = int(round((1+np.real(value))/2)*2)-1
+    b = int(round((1+np.imag(value))/2)*2)-1
+
+    if abs(a) > 2*num - 1:
+        if a < 0:
+            a = -(2*num - 1)
+        else:
+            a = 2*num - 1
+
+    if abs(b) > 2 * num - 1:
+        if b < 0:
+            b = -(2 * num - 1)
+        else:
+            b = 2 * num - 1
+
+    a = grey2bin(int((a - 1 + num ** 2) / 2))
+    b = grey2bin(int((b - 1 + num ** 2) / 2))
+
+    var = (b << num) ^ (a)
+
+    return var
+
 
 def Synch_P(signal,L):
     length = len(signal) - 2*L

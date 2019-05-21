@@ -32,7 +32,7 @@ DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
 
 
-receive = channel.get_received(sigma=0.0, h=True, ISI=False)
+receive = channel.get_received(sigma=0.005, h=True, ISI=False)
 
 
 if Modulation_type_OFDM:
@@ -40,7 +40,7 @@ if Modulation_type_OFDM:
 else:
 	symbol_length = DMT_symbol_length
 
-transmitted_QAM = data.modulate(data.get_data('hamlet_semiabridged.txt'), QAM, OFDM_symbol_length*2*QAM)
+#transmitted_QAM = data.modulate(data.get_data('hamlet_semiabridged.txt'), QAM, OFDM_symbol_length*2*QAM)
 
 data_bits = data.get_data('hamlet_semiabridged.txt') 
 frame_length_bits = symbol_length*2*QAM
@@ -53,15 +53,16 @@ if Modulation_type_OFDM:
 	for i in range(transmit_frames):
 		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
 
-print(sum(abs(transmitted_QAM-QAM_values)))
-
 plt.figure()
 
 f, psd = signal.welch(receive, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
 
-plt.show()
+test = encode.QAM(0b1011, 2)
+print(test)
+test += complex(np.random.randn(), np.random.randn())*0.1
+print(test)
 
+print(bin(decode.QAM_nearest_neighbour(test,QAM)))
 
-
-
+#plt.show()
