@@ -1,5 +1,6 @@
 import numpy as np
 from encoding_functions import grey2bin
+from scipy.signal import butter, lfilter
 
 def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     trans = np.array(received[Lp:])
@@ -12,6 +13,19 @@ def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     scaled_symbol = spectrum[sigstart:sigend]	#input signal scaled by complex channel gains
     symbol = np.divide(scaled_symbol,gains[sigstart:sigend])
     return symbol
+
+def LPF(signal,Fs,Fc):
+    b,a = butter(5,Fc/Fs)
+    return lfilter(b,a,signal)
+    
+
+def time_demodulate(signal,Fs,Fc):
+    t = np.arange(len(signal))*(Fc/Fs)*2*np.pi
+    sig_r = signal * np.cos(t)
+    sig_r = LPF(sig_r,Fs,Fc)
+    sig_c = signal * np.sin(t)
+    sig_c = LPF(sig_c,Fs,Fc)
+    return (sig_r + 1j*sig_c)
 
 QAM_norm = [2,10,42]
 
@@ -54,7 +68,7 @@ def Synch_P(signal,L):
 def Synch_R(signal,L):
     length = len(signal) - 2*L
     ri = np.absolute(signal)
-    ri  = ri[L:] * ri[L:] #this is maybe ri[L:] * ri[:-L]
+    ri  = ri[:-L] * ri[:-L] #this is maybe ri[L:] * ri[:-L]
     R = np.zeros(length)
     R[0] = np.sum(ri[0:L])
     for d in range(length-1):
