@@ -74,3 +74,9 @@ def Synch_R(signal,L):
     for d in range(length-1):
         R[d+1] = R[d] + ri[d+L] - ri[d]
     return R
+
+def Synch_getstart(signal,L):
+    P = Synch_P(signal,L)
+    R = Synch_R(signal,L)
+    T = ((np.abs(P))**2)/(R**2)
+    return np.argmax(T)+256; #This may vary with L and Lp

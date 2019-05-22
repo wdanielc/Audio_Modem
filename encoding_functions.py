@@ -1,4 +1,5 @@
 import numpy as np
+from config import *
 
 def OFDM(symbol,Lp,Fc,Fs,dF):
     spectrum = np.zeros(int(Fs/dF),dtype=complex)
@@ -42,8 +43,8 @@ def grey2bin(var):
         mask = mask >> 1
     return var
 
-
-def Synch_prefix(symbol_length,Lp,Fc,Fs,dF):
+def randQAM(symbol_length):
+    np.random.seed(Synch_seed)
     randbits1 = np.random.randint(0,4,size=2*symbol_length)
     randbits2 = np.random.randint(0,4,size=2*symbol_length)
     randQAM1 = np.zeros(symbol_length,dtype=complex)
@@ -52,6 +53,10 @@ def Synch_prefix(symbol_length,Lp,Fc,Fs,dF):
         randQAM2[i] = QAM(randbits2[i],1)
         if i % 2 == 0:
             randQAM1[i] = QAM(randbits1[i],1)
+    return randQAM1, randQAM2
+
+def Synch_prefix(symbol_length,Lp,Fc,Fs,dF):
+    randQAM1, randQAM2 = randQAM(symbol_length)
     out1 = OFDM(randQAM1,Lp,Fc,Fs,dF)
     out2 = OFDM(randQAM2,Lp,Fc,Fs,dF)
     return np.concatenate((out1,out2))

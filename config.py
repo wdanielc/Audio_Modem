@@ -19,4 +19,7 @@ Fc = 10000
 DMT_fs = 20000
 DMT_symbol_length = int(((DMT_fs/dF)-2)/2)
 
+#Synch variables
+Synch_seed = 12345678
+
 
