@@ -6,7 +6,7 @@ Created on Mon May 13 14:15:46 2019
 @author: wdc24
 """
 import encoding_functions as encode
-#import audio_functions as audio
+import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -14,22 +14,12 @@ import data_input as data
 #import time
 #import pyaudio as pa
 import wave
+from config import *
 
 filename = "hamlet_semiabridged.txt"
 Modulation_type_OFDM = True  #True for OFDM, False for DMT
 
 volume = 1.0
-OFDM_Fs = 44100
-DMT_Fs = 20000
-
-
-Fc = 10000 # Carrier frequency
-dF = 10
-T = 1/dF
-QAM = 2
-OFDM_symbol_length = 1024
-DMT_symbol_length = int(((DMT_Fs/dF)-2)/2)
-Lp = 350
 
 
 if Modulation_type_OFDM:
@@ -128,7 +118,7 @@ with open("transmit.txt", 'w') as fout:
 		fout.write(str(value) + '\n')
 
 
-audio.play(transmit, volume, fs)
+audio.play(transmit, volume, Fs)
 
 
 plt.show()
