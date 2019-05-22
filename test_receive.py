@@ -33,6 +33,10 @@ OFDM_symbol_length = 1024
 DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
 
+
+receive = channel.get_received(sigma=0.00, h=True, ISI=False)
+
+
 if Modulation_type_OFDM:
 	symbol_length = OFDM_symbol_length
 else:
@@ -68,34 +72,24 @@ recorder_state = True
 input('Press enter to finish recording')
 recorder_state = False
 
-stream.stop_stream()
-stream.close()
-p.terminate()
+frame_length_bits = symbol_length*2*QAM
+transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 
-samples_demod = decode.time_demodulate(samples,Fs,Fc) 
-synch_metric = decode.Synch_getstart(samples_demod,int(symbol_length/2))
+QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
+frame_length_samples = int(fs/dF) + Lp
+
+if Modulation_type_OFDM:
+	for i in range(transmit_frames):
+		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
+
 plt.figure()
-plt.plot(synch_metric)
 
+f, psd = signal.welch(receive, fs, nperseg=1024)
+plt.plot(f, 20*np.log10(psd))
 
-#frame_length_bits = symbol_length*2*QAM
-#transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
-#
-#QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
-#frame_length_samples = int(fs/dF) + Lp
-#
-#if Modulation_type_OFDM:
-#	for i in range(transmit_frames):
-#		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
-#
-#plt.figure()
-#
-#f, psd = signal.welch(receive, fs, nperseg=1024)
-#plt.plot(f, 20*np.log10(psd))
-#
-#data_out = data_output.demodulate(QAM_values, QAM)
-##print(type(data_out[0]))
-##print(data_bits[:100])
-#data_output.write_data(data_bits)
-#
-##plt.show()
+data_out = data_output.demodulate(QAM_values, QAM)
+#print(type(data_out[0]))
+#print(data_bits[:100])
+data_output.write_data(data_bits)
+
+#plt.show()

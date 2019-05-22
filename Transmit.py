@@ -34,10 +34,10 @@ Lp = 350
 
 if Modulation_type_OFDM:
 	symbol_length = OFDM_symbol_length
-	fs = OFDM_Fs
+	Fs = OFDM_Fs
 else:
 	symbol_length = DMT_symbol_length
-	fs = DMT_Fs
+	Fs = DMT_Fs
 
 
 #transmit = np.array([])
@@ -62,21 +62,21 @@ def callback(in_data, frame_count, time_info, status): #callback function to con
 
 stream = p.open(format=pa.paFloat32,
 				channels=1,
-				rate=fs, 
+				rate=Fs, 
 				output=True, 
 				frames_per_buffer=int(transmit_block_length),
 				stream_callback=callback
 				)
 stream = p.open(format=pa.paFloat32,
                 channels=1,
-                rate=fs,
+                rate=Fs,
                 output=True)'''
 
 # This is a list of QAM values of the data
 data_bits = data.get_data(filename)
 frame_length_bits = symbol_length*2*QAM
 transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
-frame_length_samples = int(fs/dF) + Lp
+frame_length_samples = int(Fs/dF) + Lp
 
 QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
 
@@ -87,15 +87,15 @@ transmit = np.zeros(transmit_frames * frame_length_samples)
 if Modulation_type_OFDM:
 	print("Starting OFDM")
 	for i in range(transmit_frames):
-		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
-		transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp, Fc, fs, dF)
+		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, Fs, dF),4))'''
+		transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp, Fc, Fs, dF)
 else:
 	print('Starting DMT')
 	for i in range(transmit_frames):
-		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, fs, dF),4))'''
+		'''stream.write(volume*np.tile(encode.OFDM(block, 350, Fc, Fs, dF),4))'''
 		transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.DMT(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp)
 
-
+transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
 
 
 #transmit= np.append(transmit, np.zeros(transmit_block_length-(len(transmit) % transmit_block_length)))     #Append 0s to make transmit fit evenly into data blocks of length 2*fs/df
@@ -108,7 +108,7 @@ p.terminate()
 
 plt.figure()
 
-f, psd = signal.welch(transmit, fs, nperseg=1024)
+f, psd = signal.welch(transmit, Fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
 
 filename = 'myAudioFile.wav'
@@ -119,7 +119,7 @@ samples = samples.astype(np.int16)
 wf = wave.open(filename, 'wb')
 wf.setnchannels(1)
 wf.setsampwidth(2) # 2 bytes per sample int16. If unsure, use np.dtype(np.int16).itemsize
-wf.setframerate(fs)
+wf.setframerate(Fs)
 wf.writeframes(b''.join(samples))
 wf.close()
 
@@ -127,7 +127,8 @@ with open("transmit.txt", 'w') as fout:
 	for value in transmit:
 		fout.write(str(value) + '\n')
 
-#audio.play(transmit, volume, fs)
+
+audio.play(transmit, volume, fs)
 
 
 plt.show()

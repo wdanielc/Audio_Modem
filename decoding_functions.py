@@ -68,15 +68,14 @@ def Synch_P(signal,L):
 def Synch_R(signal,L):
     length = len(signal) - 2*L
     ri = np.absolute(signal)
-    ri  = ri[:-L] * ri[:-L] #this is maybe ri[L:] * ri[:-L]
+    ri  = ri[L:] * ri[:-L] #this is maybe ri[L:] * ri[:-L]
     R = np.zeros(length)
     R[0] = np.sum(ri[0:L])
     for d in range(length-1):
         R[d+1] = R[d] + ri[d+L] - ri[d]
     return R
 
-def Synch_getstart(signal,L):
+def Synch_M(signal,L):
     P = Synch_P(signal,L)
     R = Synch_R(signal,L)
-    T = ((np.abs(P))**2)/(R**2)
-    return np.argmax(T)+256; #This may vary with L and Lp
+    return ((np.abs(P))**2)/(R**2)

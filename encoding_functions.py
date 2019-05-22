@@ -47,6 +47,7 @@ def randQAM(symbol_length):
     np.random.seed(Synch_seed)
     randbits1 = np.random.randint(0,4,size=2*symbol_length)
     randbits2 = np.random.randint(0,4,size=2*symbol_length)
+    np.random.seed()
     randQAM1 = np.zeros(symbol_length,dtype=complex)
     randQAM2 = np.zeros(symbol_length,dtype=complex)
     for i in range(symbol_length):

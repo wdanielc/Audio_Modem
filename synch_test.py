@@ -27,12 +27,13 @@ I think this will be hard to test until more demodulation stuff is added
 #Fs = 44100
 #symbol_length = 1024
 noise_pow = 0
-h_length = 1
-buffer_length = 3000
+h_length = 250
+buffer_length = 5000
 
-#h_test = np.random.randn(h_length)
-#h_test = h_test * (h_length-np.arange(h_length))
-h_test = 0.01
+h_test = np.random.randn(h_length)
+h_test = h_test * (h_length-np.arange(h_length)) / h_length
+Fs = OFDM_fs
+L = int(Fs/(2*dF))
 
 s = np.zeros(1000)
 
@@ -49,15 +50,15 @@ for i in range(1000):
     #plt.figure()
     #plt.plot(np.abs(test2))
     
-    P = decode.Synch_P(receive,512)
-    R = decode.Synch_R(receive,512)
+    P = decode.Synch_P(receive,L)
+    R = decode.Synch_R(receive,L)
     
     T = ((np.abs(P))**2)/(R**2)
     #g = gaussian(11,5)
     #g = g/np.sum(g)
     #T = np.convolve(g,T,'same')
-    #plt.figure
-    #plt.plot(np.log(T))
+#    plt.figure
+#    plt.plot(T)
     
     #print(len(receive))
     #print(buffer_length-np.argmax(T)-Lp)
