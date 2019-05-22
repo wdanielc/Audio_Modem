@@ -7,7 +7,7 @@ def get_data(file):
 
     with open(file, 'rb') as fin:
         data = fin.read()
-    
+
     return bytes2bits(data)
 
 

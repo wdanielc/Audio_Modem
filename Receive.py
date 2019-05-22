@@ -12,7 +12,8 @@ import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
-import data_input as data
+import data_input
+import data_output
 import wave
 import channel
 
@@ -32,7 +33,7 @@ DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
 
 
-receive = channel.get_received(sigma=0.005, h=True, ISI=False)
+receive = channel.get_received(sigma=0.00, h=True, ISI=False)
 
 
 if Modulation_type_OFDM:
@@ -42,7 +43,7 @@ else:
 
 #transmitted_QAM = data.modulate(data.get_data('hamlet_semiabridged.txt'), QAM, OFDM_symbol_length*2*QAM)
 
-data_bits = data.get_data('hamlet_semiabridged.txt') 
+data_bits = data_input.get_data('hamlet_semiabridged.txt')
 frame_length_bits = symbol_length*2*QAM
 transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 
@@ -58,11 +59,8 @@ plt.figure()
 f, psd = signal.welch(receive, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
 
-test = encode.QAM(0b1011, 2)
-print(test)
-test += complex(np.random.randn(), np.random.randn())*0.1
-print(test)
+data_out = data_output.demodulate(QAM_values, QAM)
 
-print(bin(decode.QAM_nearest_neighbour(test,QAM)))
+data_output.write_data(data_bits)
 
 #plt.show()
