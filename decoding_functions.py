@@ -80,7 +80,7 @@ def Synch_M(signal,L):
     R = Synch_R(signal,L)
     return ((np.abs(P))**2)/(R**2)
 
-def get_gains(estimation_frame, sent_spectrum,symbol_length,Fs,Lp,Fc,dF):
+def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
     estimate_spectrum = OFDM(estimation_frame, np.ones(symbol_length), symbol_length,Lp,Fc,dF)
 
     return np.divide(estimate_spectrum, sent_spectrum)

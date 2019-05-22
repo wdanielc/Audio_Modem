@@ -81,14 +81,14 @@ sigstart = 0
 
 estimation_frame = samples[sigstart + frame_length + Lp:sigstart + 2*frame_length + Lp]
 
-gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1])
+gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
 
 frame_length_bits = symbol_length*2*QAM
-transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
+transmit_frames = int(np.ceil(len(time_data)/frame_length_bits))
 
-time_data.extend(np.zeros(len(time_data)%frame_Length_bits))
+time_data.extend(np.zeros(len(time_data)%frame_length_bits))
 
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
 frame_length_samples = frame_length + Lp
