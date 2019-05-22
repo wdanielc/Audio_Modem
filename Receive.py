@@ -77,7 +77,7 @@ p.terminate()
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 
 sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
 
-estimation_frame = samples[sigstart + frame_length + Lp:sigstart + 2*frame_length + Lp]
+estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]
 
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)
 
@@ -96,7 +96,7 @@ time_data = np.append(time_data,np.zeros((frame_length+Lp) - len(time_data)%(fra
 
 
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
-frame_length_samples = frame_length_bits + Lp
+frame_length_samples = frame_length + Lp
 
 if Modulation_type_OFDM:
 	for i in range(transmit_frames):
