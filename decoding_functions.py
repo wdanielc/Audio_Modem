@@ -79,3 +79,9 @@ def Synch_M(signal,L):
     P = Synch_P(signal,L)
     R = Synch_R(signal,L)
     return ((np.abs(P))**2)/(R**2)
+
+def get_gains(estimation_frame, sent_frame):
+    estimate_spectrum = np.fft.fft(estimation_frame)
+    sent_spectrum = np.fft.fft(sent_frame)
+
+    return np.divide(estimate_spectrum, sent_spectrum)
