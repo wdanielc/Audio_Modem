@@ -8,7 +8,11 @@ def get_data(file):
     with open(file, 'rb') as fin:
         data = fin.read()
 
-    return bytes2bits(data)
+    out = np.zeros(len(data)*8)
+    for i in range(len(data)):
+        out[i*8:(i+1)*8] = byte2bits(data[i])
+
+    return np.array(out, dtype=np.bool)
 
 
 """This takes a bit stream (np array) and returns an array of QAM symbols. """
@@ -29,16 +33,13 @@ def modulate(bits, QAM, frame_length_bits):
     return encode_data(bits,QAM)
 
 
-def bytes2bits(y):
-    x = [format(a, '08b') for a in y]
-    r = int(x[0][0:3],2)
-    x = ''.join(x)
-    x = [int(a) for a in x]
-    for k in range(3):
-        x.pop(0)
-    for k in range(r):
-        x.pop()
-    return np.array(x, dtype=bool)
+def byte2bits(y):
+    bits = np.zeros(8)
+
+    for i in range(8):
+        bits[i] = y & (1 << (7-i))
+
+    return np.array(bits, dtype=bool)
 
 
 def bits2ints(y):
@@ -50,6 +51,5 @@ def bits2ints(y):
 
 
 if __name__ == "__main__":
-    data = get_data('test.txt')
 
-    print(modulate(data, 2))
+    print(byte2bits(16))

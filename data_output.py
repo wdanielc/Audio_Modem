@@ -2,6 +2,8 @@ import decoding_functions as decode
 import numpy as np
 from data_input import bits2ints
 
+
+# Takes boolean array and writes it to text file
 def write_data(bits, file="received.txt"):
 
     with open(file, 'wb') as fout:
@@ -20,7 +22,7 @@ def demodulate(QAM_values, QAM):
     for i in range(len(data)):
         out[i * QAM * 2:(i + 1) * QAM * 2] = ints2bits(data[i], QAM)
 
-    return np.array(out, dtype=np.int64)
+    return out
 
 
 def ints2bits(ints, QAM):
@@ -29,9 +31,13 @@ def ints2bits(ints, QAM):
 
 # There is a problem with this which is messing up writing the file
 def bits2bytes(bits):
-    s = "".join(chr(int("".join(map(str, bits[i:i + 8])), 2)) for i in
-                range(0, len(bits), 8))
-    return s
+    bytes = np.zeros(int(len(bits)/8))
+
+    for i in range(len(bytes)):
+        byte_sized_chunk = bits[i * 8:(i + 1) * 8]
+        print(byte_sized_chunk)
+
+    return None
 
 """
 def bits2bytes(x):

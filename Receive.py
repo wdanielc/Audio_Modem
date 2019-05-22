@@ -60,7 +60,8 @@ f, psd = signal.welch(receive, fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
 
 data_out = data_output.demodulate(QAM_values, QAM)
-
+#print(type(data_out[0]))
+#print(data_bits[:100])
 data_output.write_data(data_bits)
 
 #plt.show()
