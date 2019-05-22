@@ -1,6 +1,7 @@
 import numpy as np
 from encoding_functions import grey2bin
 from scipy.signal import butter, lfilter
+from scipy.ndimage.filters import maximum_filter1d
 
 def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     trans = np.array(received[Lp:])
@@ -75,10 +76,12 @@ def Synch_R(signal,L):
         R[d+1] = R[d] + ri[d+L] - ri[d]
     return R
 
-def Synch_M(signal,L):
+def Synch_framestart(signal,L,spread=300):
     P = Synch_P(signal,L)
     R = Synch_R(signal,L)
-    return ((np.abs(P))**2)/(R**2)
+    R = maximum_filter1d(R,spread)
+    M = ((np.abs(P))**2)/(R**2)
+    return np.argmax(M)
 
 def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
     estimate_spectrum = OFDM(estimation_frame, np.ones(symbol_length), symbol_length,Lp,Fc,dF)
