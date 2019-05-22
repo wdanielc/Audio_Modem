@@ -9,11 +9,13 @@ dF = 10
 T = 1/dF
 QAM = 2
 Lp = 350
+Fs = 44100
 
 # OFDM variables
 OFDM_fs = 44100
 OFDM_symbol_length = 1024
 Fc = 10000
+frame_length = int(Fs/dF)
 
 # DMT variables
 DMT_fs = 20000

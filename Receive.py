@@ -17,6 +17,7 @@ import data_output
 import wave
 import channel
 import pyaudio as pa
+from config import *
 
 
 filename = "hamlet_output.txt"	#file to save to
@@ -74,28 +75,33 @@ p.terminate()
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 
 synch_metric = decode.Synch_getstart(samples_demod,int(symbol_length/2))
-plt.figure()
-plt.plot(synch_metric)
 
+#assume we get the signal start here
 
-#frame_length_bits = symbol_length*2*QAM
-#transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
-#
-#QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
-#frame_length_samples = int(fs/dF) + Lp
-#
-#if Modulation_type_OFDM:
-#	for i in range(transmit_frames):
-#		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
+estimation_frame = samples[sigstart + frame_length + Lp:sigstart + 2*frame_length + Lp]
+
+gains = decode.get_gains(estimation_frame,encode,Synch_prefix(symbol_length,Lp,Fc,Fs,dF)[:frame_length])
+
+data_bits = samples[sigstart + 2*frame_length + Lp:]
+
+frame_length_bits = symbol_length*2*QAM
+transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
+
+QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
+frame_length_samples = frame_length + Lp
+
+if Modulation_type_OFDM:
+	for i in range(transmit_frames):
+		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
 #
 #plt.figure()
 #
 #f, psd = signal.welch(receive, fs, nperseg=1024)
 #plt.plot(f, 20*np.log10(psd))
-#
-#data_out = data_output.demodulate(QAM_values, QAM)
-##print(type(data_out[0]))
-##print(data_bits[:100])
-#data_output.write_data(data_bits)
+
+data_out = data_output.demodulate(QAM_values, QAM)
+#print(type(data_out[0]))
+#print(data_bits[:100])
+data_output.write_data(data_bits)
 #
 ##plt.show()
