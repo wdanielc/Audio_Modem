@@ -18,12 +18,12 @@ import wave
 import channel
 import pyaudio as pa
 from config import *
-
+from scipy.ndimage.filters import maximum_filter1d
 
 filename = "hamlet_output.txt"	#file to save to
 Modulation_type_OFDM = True  #True for OFDM, False for DMT
 
-
+"""
 fs = 44100
 
 Fc = 10000 # Carrier frequency
@@ -33,6 +33,7 @@ QAM = 2
 OFDM_symbol_length = 1024
 DMT_symbol_length = int(((fs/dF)-2)/2)
 Lp = 350
+"""
 
 if Modulation_type_OFDM:
 	symbol_length = OFDM_symbol_length
@@ -58,7 +59,7 @@ def callback(in_data, frame_count, time_info, status):
 
 
 p = pa.PyAudio()
-stream = p.open(format=pa.paFloat32, channels=1, rate=fs, 
+stream = p.open(format=pa.paFloat32, channels=1, rate=Fs,
                stream_callback=callback, input=True, 
                frames_per_buffer=record_buffer_length)
 stream.start_stream()
@@ -82,6 +83,12 @@ gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbo
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
 
+P = decode.Synch_P(samples_demod, int(frame_length/2))
+R = decode.Synch_R(samples_demod, int(frame_length/2))
+R = maximum_filter1d(R,300)
+M = ((np.abs(P))**2)/(R**2)
+plt.plot(M)
+
 frame_length_bits = symbol_length*2*QAM
 transmit_frames = int(np.ceil(len(time_data)/(frame_length+Lp)))
 
@@ -104,5 +111,19 @@ data_out = data_output.demodulate(QAM_values, QAM)
 #print(type(data_out[0]))
 #print(data_bits[:100])
 data_output.write_data(data_out)
+
+filename = 'received.wav'
+# save result to file
+samples = np.array(samples)
+samples = samples/max(abs(samples))
+samples = (.5*samples+.5)*(2**14)
+samples = samples.astype(np.int16)
+wf = wave.open(filename, 'wb')
+wf.setnchannels(1)
+wf.setsampwidth(2) # 2 bytes per sample int16. If unsure, use np.dtype(np.int16).itemsize
+wf.setframerate(Fs)
+wf.writeframes(b''.join(samples))
+wf.close()
+
 #
-##plt.show()
+plt.show()
