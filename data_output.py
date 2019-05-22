@@ -6,9 +6,10 @@ from data_input import bits2ints
 # Takes boolean array and writes it to text file
 def write_data(bits, file="received.txt"):
 
-    with open(file, 'wb') as fout:
-        for byte in bits2bytes(bits):
-            fout.write(bytes(byte))
+    data_out = "".join(chr(int(byte)) for byte in bits2bytes(bits))
+
+    with open(file, 'w') as fout:
+        fout.write(data_out)
 
     return None
 
@@ -29,15 +30,15 @@ def ints2bits(ints, QAM):
     return np.array([(2**(2 * QAM - 1) >> i) & ints for i in range(QAM * 2)])
 
 
-# There is a problem with this which is messing up writing the file
+# Converts an array of booleans into an array of bytes (ints)
 def bits2bytes(bits):
     bytes = np.zeros(int(len(bits)/8))
 
     for i in range(len(bytes)):
         byte_sized_chunk = bits[i * 8:(i + 1) * 8]
-        print(byte_sized_chunk)
+        bytes[i] = bits2ints(byte_sized_chunk)
 
-    return None
+    return np.array(bytes)
 
 """
 def bits2bytes(x):
