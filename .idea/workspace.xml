@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5184990f-9b61-420a-b59c-f777ac3a999b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Transmit.py" afterPath="$PROJECT_DIR$/Transmit.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_receive.py" afterPath="$PROJECT_DIR$/test_receive.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/transmit.txt" afterPath="$PROJECT_DIR$/transmit.txt" />
-    </list>
+    <list default="true" id="5184990f-9b61-420a-b59c-f777ac3a999b" name="Default" comment="" />
     <ignored path="Audio_Modem.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,7 +33,7 @@
       <file leaf-file-name="Transmit.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Transmit.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
+            <state relative-caret-position="1530">
               <caret line="102" column="43" selection-start-line="102" selection-start-column="43" selection-end-line="102" selection-end-column="43" />
               <folding>
                 <element signature="e#107#142#0" expanded="true" />
@@ -62,18 +57,28 @@
       <file leaf-file-name="Receive.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Receive.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
+            <state relative-caret-position="1500">
               <caret line="112" column="32" selection-start-line="112" selection-start-column="32" selection-end-line="112" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_receive.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_receive.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_receive.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
-              <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+              <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="impulse_estimation.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/impulse_estimation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="257">
+              <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -92,8 +97,8 @@
       <file leaf-file-name="received.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/received.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7665">
-              <caret line="511" column="506" selection-start-line="511" selection-start-column="506" selection-end-line="511" selection-end-column="506" />
+            <state relative-caret-position="8055">
+              <caret line="537" column="53" selection-start-line="537" selection-start-column="53" selection-end-line="537" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -173,8 +178,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -195,6 +198,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -211,7 +216,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test_receive">
+  <component name="RunManager" selected="Python.impulse_estimation">
     <configuration default="false" name="Transmit" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -440,10 +445,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_receive" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Transmit" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Receive" />
-        <item index="3" class="java.lang.String" itemvalue="Python.impulse_estimation" />
+        <item index="0" class="java.lang.String" itemvalue="Python.impulse_estimation" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test_receive" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Transmit" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Receive" />
         <item index="4" class="java.lang.String" itemvalue="Python.data_input" />
       </list>
     </recent_temporary>
@@ -465,8 +470,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="768" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1366" height="768" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24981412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -475,7 +480,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22241993" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22619048" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21575342" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21428572" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -848,24 +853,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/impulse_estimation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/received.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7665">
-          <caret line="511" column="506" selection-start-line="511" selection-start-column="506" selection-end-line="511" selection-end-column="506" />
+        <state relative-caret-position="8055">
+          <caret line="537" column="53" selection-start-line="537" selection-start-column="53" selection-end-line="537" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Transmit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
+        <state relative-caret-position="1530">
           <caret line="102" column="43" selection-start-line="102" selection-start-column="43" selection-end-line="102" selection-end-column="43" />
           <folding>
             <element signature="e#107#142#0" expanded="true" />
@@ -875,7 +873,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Receive.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
+        <state relative-caret-position="1500">
           <caret line="112" column="32" selection-start-line="112" selection-start-column="32" selection-end-line="112" selection-end-column="32" />
           <folding />
         </state>
@@ -884,7 +882,15 @@
     <entry file="file://$PROJECT_DIR$/test_receive.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/impulse_estimation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
           <folding />
         </state>
       </provider>
