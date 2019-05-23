@@ -39,18 +39,20 @@ samples = []
 recorder_state = False
 record_buffer_length = 1000 # recording buffer length
 
+h_length = 50
 
-receive = channel.get_received(sigma=0.0, h=True, ISI=False)
+receive = channel.get_received(sigma=0, h = np.random.randn(h_length), ISI=True)
 
 samples = np.insert(receive, 0, np.zeros(1000))
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 
-sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
+sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2), 800)
+print(sigstart)
+sigstart = 1500
 
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]
 
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)
-gains = np.ones(1024)
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
 

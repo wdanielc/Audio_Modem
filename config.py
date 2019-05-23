@@ -14,7 +14,7 @@ Fs = 44100
 # OFDM variables
 OFDM_Fs = 44100
 OFDM_symbol_length = 1024
-Fc = 10000
+Fc = 10005
 frame_length = int(Fs/dF)
 
 # DMT variables
