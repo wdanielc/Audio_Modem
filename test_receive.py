@@ -61,6 +61,7 @@ R = decode.Synch_R(samples_demod, int(frame_length/2))
 R = maximum_filter1d(R,300)
 M = ((np.abs(P))**2)/(R**2)
 plt.plot(M)
+plt.savefig("synch_metric.png", dpi=300)
 
 frame_length_bits = symbol_length*2*QAM
 transmit_frames = int(np.ceil(len(time_data)/(frame_length+Lp)))

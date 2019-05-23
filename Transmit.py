@@ -100,6 +100,7 @@ plt.figure()
 
 f, psd = signal.welch(transmit, Fs, nperseg=1024)
 plt.plot(f, 20*np.log10(psd))
+plt.savefig("transmitted_spectrum", dpi=300)
 
 filename = 'myAudioFile.wav'
 # save result to file
