@@ -4,7 +4,7 @@ from config import *
 def OFDM(symbol,Lp,Fc,Fs,dF):
     spectrum = np.zeros(int(Fs/dF),dtype=complex)
     
-    sigstart = (Fc/dF) - (len(symbol)/2) #this isnt *exactly* centred on Fc, but oh well
+    sigstart = (Fc/dF) + 0.5 - (len(symbol)/2) #this isnt *exactly* centred on Fc, but oh well
     sigstart = int(round(sigstart))
     sigend = sigstart + len(symbol)
     

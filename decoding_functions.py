@@ -6,8 +6,7 @@ from scipy.ndimage.filters import maximum_filter1d
 def OFDM(received,gains,symbol_length,Lp,Fc,dF):
     trans = np.array(received[Lp:])
     spectrum = np.fft.fft(trans)
-    
-    sigstart = (Fc/dF) - symbol_length/2 #this isnt *exactly* centred on Fc, but oh well
+    sigstart = (Fc/dF) + 0.5 - symbol_length/2
     sigstart = int(round(sigstart))
     sigend = sigstart + symbol_length
     
