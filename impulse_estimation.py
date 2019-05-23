@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import audio_functions
 import time
 
-fs = 20980
+fs = 44100
 
 samples = [] # this will hold the recorded samples
 # THE TRESHOLD VALUE IS HEURISTIC AND YOU MAY WANT TO PLAY WITH IT...
@@ -96,7 +96,17 @@ p.terminate()
 def get_h():
     return samples
 
-if __name__ == "__main__":
-    plt.plot(samples)
-    plt.grid()
-    plt.show()
+
+for i in range(len(samples)):
+    if abs(samples[i]) > 1:
+        samplestart = i
+        break
+
+samples = samples[samplestart:]
+plt.plot(samples)
+plt.show()
+
+
+with open("impulse.txt", 'w') as fout:
+    for value in samples[:500]:
+        fout.write(str(value) + '\n')

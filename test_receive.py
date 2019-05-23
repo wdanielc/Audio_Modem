@@ -39,7 +39,7 @@ samples = []
 recorder_state = False
 record_buffer_length = 1000 # recording buffer length
 
-h_length = 50
+h_length = 10
 
 receive = channel.get_received(sigma=0, h = np.random.randn(h_length), ISI=True)
 
@@ -53,6 +53,8 @@ sigstart = 1500
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]
 
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)
+plt.plot(gains)
+plt.show()
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
 
