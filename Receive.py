@@ -100,7 +100,7 @@ frame_length_samples = frame_length + Lp
 
 if Modulation_type_OFDM:
 	for i in range(transmit_frames):
-		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(time_data[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(symbol_length),symbol_length,Lp,Fc,dF)
+		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(time_data[i*frame_length_samples:(i+1)*frame_length_samples],gains,symbol_length,Lp,Fc,dF)
 #
 #plt.figure()
 #

@@ -17,21 +17,12 @@ import data_output
 import wave
 import channel
 import pyaudio as pa
+from config import *
+from scipy.ndimage.filters import maximum_filter1d
 
 
 filename = "hamlet_output.txt"	#file to save to
 Modulation_type_OFDM = True  #True for OFDM, False for DMT
-
-
-fs = 44100
-
-Fc = 10000 # Carrier frequency
-dF = 10
-T = 1/dF
-QAM = 2
-OFDM_symbol_length = 1024
-DMT_symbol_length = int(((fs/dF)-2)/2)
-Lp = 350
 
 
 receive = channel.get_received(sigma=0.00, h=True, ISI=False)
@@ -49,47 +40,49 @@ recorder_state = False
 record_buffer_length = 1000 # recording buffer length
 
 
-def callback(in_data, frame_count, time_info, status):
-	global samples, recorder_state
+receive = channel.get_received(sigma=0.0, h=True, ISI=False)
 
-	mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
+samples = np.insert(receive, 0, np.zeros(1000))
 
-	if recorder_state:
-		samples.extend(mysamples)
+samples_demod = decode.time_demodulate(samples,Fs,Fc) 
+sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
 
-	return(in_data, pa.paContinue) # returning is compulsory even in playback mode
+estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]
 
+gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)
+gains = np.ones(1024)
 
-p = pa.PyAudio()
-stream = p.open(format=pa.paFloat32, channels=1, rate=fs, 
-               stream_callback=callback, input=True, 
-               frames_per_buffer=record_buffer_length)
-stream.start_stream()
+time_data = samples[sigstart + 2*frame_length + Lp:]
 
-
-input('Press enter when ready to record')
-recorder_state = True
-input('Press enter to finish recording')
-recorder_state = False
+P = decode.Synch_P(samples_demod, int(frame_length/2))
+R = decode.Synch_R(samples_demod, int(frame_length/2))
+R = maximum_filter1d(R,300)
+M = ((np.abs(P))**2)/(R**2)
+plt.plot(M)
 
 frame_length_bits = symbol_length*2*QAM
-transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
+transmit_frames = int(np.ceil(len(time_data)/(frame_length+Lp)))
+
+time_data = np.append(time_data,np.zeros((frame_length+Lp) - len(time_data)%(frame_length+Lp)))
+
 
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)	#initialises QAM value vector of correct length
-frame_length_samples = int(fs/dF) + Lp
+frame_length_samples = frame_length + Lp
 
 if Modulation_type_OFDM:
 	for i in range(transmit_frames):
-		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(receive[i*frame_length_samples:(i+1)*frame_length_samples],np.ones(int(fs/dF)),symbol_length,Lp,Fc,dF)
-
-plt.figure()
-
-f, psd = signal.welch(receive, fs, nperseg=1024)
-plt.plot(f, 20*np.log10(psd))
+		QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(time_data[i*frame_length_samples:(i+1)*frame_length_samples],gains,symbol_length,Lp,Fc,dF)
+#
+#plt.figure()
+#
+#f, psd = signal.welch(receive, fs, nperseg=1024)
+#plt.plot(f, 20*np.log10(psd))
 
 data_out = data_output.demodulate(QAM_values, QAM)
 #print(type(data_out[0]))
 #print(data_bits[:100])
-data_output.write_data(data_bits)
+data_output.write_data(data_out)
 
-#plt.show()
+#
+plt.show()
+
