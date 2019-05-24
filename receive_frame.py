@@ -1,6 +1,6 @@
 import encoding_functions as encode
 import decoding_functions as decode
-import audio_functions as audio
+#import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -8,7 +8,7 @@ import data_input
 import data_output
 import wave
 import channel
-import pyaudio as pa
+#import pyaudio as pa
 from scipy.ndimage.filters import maximum_filter1d
 
 
@@ -67,6 +67,9 @@ for i in range(transmit_frames):
 
 data_out = data_output.demodulate(QAM_values, QAM)
 
+#we know we only sent one frame
+data_out = data_out[:(2*QAM*symbol_length)]
+
 
 with open("start_bits.txt", 'r') as fin:
 	transmitted = np.array(fin.read().split('\n'))
@@ -76,21 +79,10 @@ transmitted = np.delete(transmitted, -1)
 transmitted = np.array(transmitted, dtype = int)
 data_out = np.array(data_out, dtype = int)
 
+print(data_out)
+print(transmitted)
 
-transmitted2 = np.zeros(len(data_out))
-
-
-for i in range(len(transmitted)):
-	transmitted2[(2*i)] = (transmitted[i] & 2) >> 1
-	transmitted2[(2*i)+1] = (transmitted[i] & 1)
-
-
-print(data_out[:10])
-print(transmitted2[:10])
-
-transmitted2 = np.array(transmitted2, dtype = int)
-
-errors = np.bitwise_xor(transmitted2,data_out)
+errors = np.bitwise_xor(transmitted,data_out)
 print('Error rate = ',np.sum(errors)/len(data_out))
 
 

@@ -6,7 +6,7 @@ Created on Mon May 13 14:15:46 2019
 @author: wdc24
 """
 import encoding_functions as encode
-import audio_functions as audio
+#import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
