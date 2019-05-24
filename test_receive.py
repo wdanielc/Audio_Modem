@@ -24,8 +24,10 @@ from scipy.ndimage.filters import maximum_filter1d
 filename = "hamlet_output.txt"	#file to save to
 Modulation_type_OFDM = True  #True for OFDM, False for DMT
 
+with open("impulse.txt", 'r') as fin:
+	h = np.array(fin.read().split('\n'))
 
-receive = channel.get_received(sigma=0.00, h=True, ISI=False)
+receive = channel.get_received(sigma=0.00, h=h, ISI=False)
 
 
 if Modulation_type_OFDM:
@@ -39,22 +41,20 @@ samples = []
 recorder_state = False
 record_buffer_length = 1000 # recording buffer length
 
-h_length = 10
+h_length = 1
 
-receive = channel.get_received(sigma=0, h = np.random.randn(h_length), ISI=True)
+receive = channel.get_received(sigma=0, h = [1], ISI=True)
 
 samples = np.insert(receive, 0, np.zeros(1000))
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 
-sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2), 800)
-print(sigstart)
+sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
 sigstart = 1500
 
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]
 
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)
-plt.plot(gains)
-plt.show()
+print(gains)
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
 
@@ -62,8 +62,6 @@ P = decode.Synch_P(samples_demod, int(frame_length/2))
 R = decode.Synch_R(samples_demod, int(frame_length/2))
 R = maximum_filter1d(R,300)
 M = ((np.abs(P))**2)/(R**2)
-plt.plot(M)
-plt.savefig("synch_metric.png", dpi=300)
 
 frame_length_bits = symbol_length*2*QAM
 transmit_frames = int(np.ceil(len(time_data)/(frame_length+Lp)))

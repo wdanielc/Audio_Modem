@@ -15,6 +15,7 @@ def write_data(bits, file="received.txt"):
 
 
 def demodulate(QAM_values, QAM):
+    print(QAM)
     out = np.zeros((len(QAM_values) * QAM * 2), dtype=np.bool)
 
     decode_data = np.vectorize(decode.QAM_nearest_neighbour)

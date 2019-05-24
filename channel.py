@@ -12,8 +12,8 @@ def isi_channel(input, sigma, h, ISI):
     output += sigma * np.random.randn(len(output))
     return output
 
-def get_received(sigma=0.0, h=True, ISI=True):
-    with open("transmit.txt", 'r') as fin:
+def get_received(sigma=0.0, h=True, ISI=True, file = "transmit.txt"):
+    with open(file, 'r') as fin:
         transmitted = np.array(fin.read().split('\n'))
 
     transmitted = np.delete(transmitted, -1)
