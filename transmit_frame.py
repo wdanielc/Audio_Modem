@@ -35,7 +35,6 @@ frame_length_samples = int(Fs/dF) + Lp
 
 QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
 
-print(QAM_values)
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
 

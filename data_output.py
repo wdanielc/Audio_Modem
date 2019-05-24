@@ -15,14 +15,14 @@ def write_data(bits, file="received.txt"):
 
 
 def demodulate(QAM_values, QAM):
-    print(QAM)
     out = np.zeros((len(QAM_values) * QAM * 2), dtype=np.bool)
 
-    decode_data = np.vectorize(decode.QAM_nearest_neighbour)
-    data = decode_data(QAM_values, QAM)
+    #decode_data = np.vectorize(decode.QAM_nearest_neighbour)   #Vectorise doesn't work for some reason - it randomly changes some of the values
+    #data = decode_data(QAM_values, QAM)
 
-    for i in range(len(data)):
-        out[i * QAM * 2:(i + 1) * QAM * 2] = ints2bits(data[i], QAM)
+    for i in range(len(QAM_values)):
+        decoded_value = decode.QAM_nearest_neighbour(QAM_values[i], QAM)
+        out[i * QAM * 2:(i + 1) * QAM * 2] = ints2bits(decoded_value, QAM)
 
     return out
 

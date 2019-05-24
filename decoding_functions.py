@@ -29,30 +29,47 @@ def time_demodulate(signal,Fs,Fc):
 
 QAM_norm = [2,10,42]
 
-def QAM_nearest_neighbour(value, num):
-    value *= QAM_norm[num-1]**0.5
+def QAM_nearest_neighbour(QAM_value, QAM):
+    QAM_value *= QAM_norm[QAM-1]**0.5
 
-    # Round to the nearest odd number
-    a = int(round((1+np.real(value))/2)*2)-1
-    b = int(round((1+np.imag(value))/2)*2)-1
+    '''a = int(round((1+np.real(QAM_value))/2)*2)-1
+    b = int(round((1+np.imag(QAM_value))/2)*2)-1
 
-    if abs(a) > 2*num - 1:
+
+    if abs(a) > 2*QAM - 1:
         if a < 0:
-            a = -(2*num - 1)
+            a = -(2*QAM - 1)
         else:
-            a = 2*num - 1
+            a = 2*QAM - 1
 
-    if abs(b) > 2 * num - 1:
+    if abs(b) > 2 *QAM - 1:
         if b < 0:
-            b = -(2 * num - 1)
+            b = -(2 *QAM - 1)
         else:
-            b = 2 * num - 1
+            b = 2 *QAM- 1'''
 
-    a = grey2bin(int((a - 1 + num ** 2) / 2))
-    b = grey2bin(int((b - 1 + num ** 2) / 2))
 
-    var = (b << num) ^ (a)
+    a = 0 
+    b = 0
 
+
+    for i in range(1,QAM+1):                    #for each bit in the grey code: check if positive or negative, set 1 if positive, then rescale value for positive/negative split to be centered for next bit
+        if np.real(QAM_value) > 0:
+            a += (1 << (QAM - i))
+            QAM_value -= (QAM - i)
+        else:
+            QAM_value += (QAM -i)
+        if np.imag(QAM_value) > 0:
+            b += (1 << (QAM - i))
+            QAM_value -= (QAM - i)
+        else:
+            QAM_value += (QAM -i)
+
+
+    '''a = grey2bin(int((a - 1 + QAM ** 2) / 2))
+    b = grey2bin(int((b - 1 + QAM ** 2) / 2))'''
+
+    var = (b << QAM) ^ (a)
     return var
 
 
