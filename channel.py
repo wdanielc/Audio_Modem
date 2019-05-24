@@ -19,6 +19,8 @@ def get_received(sigma=0.0, h=True, ISI=True, file = "transmit.txt"):
     transmitted = np.delete(transmitted, -1)
     transmitted = np.array(transmitted, dtype=np.float64)
 
-    transmitted = np.insert(transmitted, 0, np.zeros(1000)) #adds delay- can be made random later
+    transmitted = np.insert(transmitted, 0, np.zeros(300)) #adds delay before and after - can be made random later
+    transmitted = np.insert(transmitted, -1, np.zeros(300)) 
+
 
     return isi_channel(transmitted, sigma, h, ISI)

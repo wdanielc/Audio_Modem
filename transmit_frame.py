@@ -18,9 +18,9 @@ import wave
 Fs = 44000
 dF = 1000
 QAM = 1
-symbol_length = 8
-Lp = 4
-Fc = 10005
+symbol_length = 16
+Lp = 8
+Fc = 10500
 
 volume = 1.0
 
@@ -29,7 +29,10 @@ volume = 1.0
 
 frame_length_bits = symbol_length*2*QAM
 data_bits = np.random.randint(2, size=frame_length_bits)	#generate random sequence of length = 1 frame
-print(data_bits)
+print(data_bits[:10])
+with open("start_bits.txt", 'w') as fout:
+	for value in data_bits:
+		fout.write(str(value) + '\n')
 transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 frame_length_samples = int(Fs/dF) + Lp
 

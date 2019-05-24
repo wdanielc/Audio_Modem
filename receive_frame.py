@@ -15,21 +15,38 @@ from scipy.ndimage.filters import maximum_filter1d
 Fs = 44000
 dF = 1000
 QAM = 1
-symbol_length = 8
-Lp = 4
-Fc = 10005
+symbol_length = 16
+Lp = 8
+Fc = 10500
 frame_length = int(Fs/dF)
 frame_length_bits = symbol_length*2*QAM
 frame_length_samples = frame_length + Lp
 
 
-samples = channel.get_received(sigma=0.1, h = [1,1], ISI=True, file = "transmit_frame.txt")
+h_length = 1
+h = [np.exp(-2*i/h_length) for i in range(h_length)]
+print(h)
+
+
+samples = channel.get_received(sigma=0, h = h, ISI=True, file = "transmit_frame.txt")
 
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
 sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
 print(sigstart)
-sigstart = 1000 + Lp
+sigstart = 300 + Lp
+
+
+'''P = decode.Synch_P(samples_demod, int(frame_length/2))
+R = decode.Synch_R(samples_demod, int(frame_length/2))
+R = maximum_filter1d(R,300)
+M = ((np.abs(P))**2)/(R**2)
+plt.plot(M, label = 'M')
+plt.plot(abs(P), label = 'P')
+plt.plot(R, label = 'R')
+plt.plot(samples, label = 'signal')
+plt.gca().legend()
+plt.show()'''
 
 
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]						#slice out second synch block
@@ -49,7 +66,33 @@ for i in range(transmit_frames):
 
 
 data_out = data_output.demodulate(QAM_values, QAM)
-print(np.array(data_out, dtype = int))
+
+
+with open("start_bits.txt", 'r') as fin:
+	transmitted = np.array(fin.read().split('\n'))
+
+
+transmitted = np.delete(transmitted, -1)
+transmitted = np.array(transmitted, dtype = int)
+data_out = np.array(data_out, dtype = int)
+
+
+transmitted2 = np.zeros(len(data_out))
+
+
+for i in range(len(transmitted)):
+	transmitted2[(2*i)] = (transmitted[i] & 2) >> 1
+	transmitted2[(2*i)+1] = (transmitted[i] & 1)
+
+
+print(data_out[:10])
+print(transmitted2[:10])
+
+transmitted2 = np.array(transmitted2, dtype = int)
+
+errors = np.bitwise_xor(transmitted2,data_out)
+print('Error rate = ',np.sum(errors)/len(data_out))
+
 
 
 

@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 import channel
 from scipy.signal import gaussian
 from scipy.ndimage.filters import maximum_filter1d
-from config import *
 
 '''
 I'm not sure if this is a good test, its possible that OFDM, the cyclic prefix,
@@ -22,26 +21,26 @@ and channel noise and response need to be simulated.
 I think this will be hard to test until more demodulation stuff is added
 '''
 
-#Lp = 350
-#dF = 10
-#Fc = 10005
-#Fs = 44100
-#symbol_length = 1024
+Lp = 16
+dF = 100
+Fc = 10500
+Fs = 44000
 noise_pow = 0
 h_length = 300
-buffer_length = 10000
+buffer_length = 100
+symbol_length = 64
 
 h_test = np.random.randn(h_length)
 h_test = h_test * (h_length-np.arange(h_length))
 h_test = h_test/np.std(h_test)
-Fs = OFDM_fs
+h_test = 1
 L = int(Fs/(2*dF))
 
 s = np.zeros(1000)
 
 plt.figure
 
-for i in range(1000):
+for i in range(1):
     np.random.seed()
     transmit = encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF)
     transmit = transmit * 1000
@@ -70,6 +69,7 @@ for i in range(1000):
 #    plt.plot(np.log(R))
 #    plt.plot(np.log(T))
     plt.plot(T)
+    plt.show()
     
     #print(len(receive))
     #print(buffer_length-np.argmax(T)-Lp)
