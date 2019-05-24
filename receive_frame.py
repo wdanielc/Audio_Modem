@@ -23,12 +23,12 @@ frame_length_bits = symbol_length*2*QAM
 frame_length_samples = frame_length + Lp
 
 
-samples = channel.get_received(sigma=0, h = [1], ISI=True, file = "transmit_frame.txt")
-samples = np.insert(samples, 0, np.zeros(1000))
+samples = channel.get_received(sigma=0.1, h = [1,1], ISI=True, file = "transmit_frame.txt")
 
 
-#samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
-#sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
+samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
+sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
+print(sigstart)
 sigstart = 1000 + Lp
 
 
