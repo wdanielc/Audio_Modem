@@ -63,10 +63,10 @@ def Synch_R(signal,L):
 
 def Synch_framestart(signal,L,spread=300):
     P = Synch_P(signal,L)
-#    R = Synch_R(signal,L)
-#    R = maximum_filter1d(R,spread)
-#    M = ((np.abs(P))**2)/(R**2)
-    return np.argmax(np.abs(P))
+    R = Synch_R(signal,L)
+    R = maximum_filter1d(R,spread)
+    M = ((np.abs(P))**2)/(R**2)
+    return np.argmax(M)
 
 def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
     estimate_spectrum = OFDM(estimation_frame, np.ones(symbol_length), symbol_length,Lp,Fc,dF)

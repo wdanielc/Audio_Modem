@@ -12,7 +12,7 @@ def get_data(file):
     for i in range(len(data)):
         out[i*8:(i+1)*8] = byte2bits(data[i])
 
-    return np.array(out, dtype=np.bool)
+    return np.array(out, dtype=np.int64)
 
 
 """This takes a bit stream (np array) and returns an array of QAM symbols. """

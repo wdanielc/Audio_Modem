@@ -23,14 +23,14 @@ frame_length_bits = symbol_length*2*QAM
 frame_length_samples = frame_length + Lp
 
 
-h_length = 100
-h = [np.exp(-2*i/h_length) for i in range(h_length)]
+#h_length = 100
+#h = [np.exp(-2*i/h_length) for i in range(h_length)]
 
 
-samples = channel.get_received(sigma=0.01, h = h, ISI=True, file = "transmit_frame.txt")
+#samples = channel.get_received(sigma=0.01, h = h, ISI=True, file = "transmit_frame.txt")
 
 
-'''samples = []
+samples = []
 recorder_state = False
 record_buffer_length = 1000 # recording buffer length
 
@@ -60,7 +60,7 @@ recorder_state = False
 
 stream.stop_stream()
 stream.close()
-p.terminate()'''
+p.terminate()
 
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
@@ -68,18 +68,18 @@ sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
 print(sigstart)
 #sigstart = 300 + Lp
 
-
-'''P = decode.Synch_P(samples_demod, int(frame_length/2))
+"""
+P = decode.Synch_P(samples_demod, int(frame_length/2))
 R = decode.Synch_R(samples_demod, int(frame_length/2))
 R = maximum_filter1d(R,300)
 M = ((np.abs(P))**2)/(R**2)
 plt.plot(M, label = 'M')
-plt.plot(abs(P), label = 'P')
-plt.plot(R, label = 'R')
+#plt.plot(abs(P), label = 'P')
+#plt.plot(R, label = 'R')
 plt.plot(samples, label = 'signal')
 plt.gca().legend()
-plt.show()'''
-
+plt.show()
+"""
 
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]						#slice out second synch block
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)		#get gains from second synch block
@@ -101,7 +101,7 @@ for i in range(transmit_frames):
 data_out = data_output.demodulate(QAM_values, QAM)
 
 #we know we only sent 10 frames
-data_out = data_out[:(2*QAM*symbol_length)*10]
+data_out = data_out[:(2*QAM*symbol_length)*100]
 
 
 with open("start_bits.txt", 'r') as fin:
@@ -110,11 +110,14 @@ with open("start_bits.txt", 'r') as fin:
 
 transmitted = np.delete(transmitted, -1)
 transmitted = np.array(transmitted, dtype = int)
-data_out = np.array(data_out, dtype = int)
+print(len(data_out), len(transmitted))
+data_out = np.array(data_out, dtype = int)#[:len(transmitted)]
 
-print(data_out[:10])
 errors = np.bitwise_xor(transmitted,data_out)
+print(errors[:50])
 print('Error rate = ',np.sum(errors)/len(data_out))
+
+data_output.write_data(data_out, "receive_frame.txt")
 
 
 

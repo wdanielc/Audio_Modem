@@ -28,7 +28,8 @@ volume = 1.0
 # This is a list of QAM values of the data
 
 frame_length_bits = symbol_length*2*QAM
-data_bits = np.random.randint(2, size=frame_length_bits*10)	#generate random sequence of length = 10 frame
+#data_bits = np.random.randint(2,size=frame_length_bits*100)	#generate random sequence of length = 10 frame
+data_bits = data.get_data("hamlet_semiabridged.txt")[:100*frame_length_bits]
 with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
 		fout.write(str(value) + '\n')
