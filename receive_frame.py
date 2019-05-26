@@ -8,33 +8,65 @@ import data_input
 import data_output
 import wave
 import channel
-#import pyaudio as pa
+import pyaudio as pa
 from scipy.ndimage.filters import maximum_filter1d
 
 
 Fs = 44000
-dF = 1000
+dF = 100
 QAM = 1
-symbol_length = 16
-Lp = 8
+symbol_length = 128
+Lp = 350
 Fc = 10500
 frame_length = int(Fs/dF)
 frame_length_bits = symbol_length*2*QAM
 frame_length_samples = frame_length + Lp
 
 
-h_length = 1
+h_length = 100
 h = [np.exp(-2*i/h_length) for i in range(h_length)]
-print(h)
 
 
-samples = channel.get_received(sigma=0, h = h, ISI=True, file = "transmit_frame.txt")
+samples = channel.get_received(sigma=0.01, h = h, ISI=True, file = "transmit_frame.txt")
+
+
+'''samples = []
+recorder_state = False
+record_buffer_length = 1000 # recording buffer length
+
+
+def callback(in_data, frame_count, time_info, status):
+	global samples, recorder_state
+
+	mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
+
+	if recorder_state:
+		samples.extend(mysamples)
+
+	return(in_data, pa.paContinue) # returning is compulsory even in playback mode
+
+
+p = pa.PyAudio()
+stream = p.open(format=pa.paFloat32, channels=1, rate=Fs,
+               stream_callback=callback, input=True, 
+               frames_per_buffer=record_buffer_length)
+stream.start_stream()
+
+
+input('Press enter when ready to record')
+recorder_state = True
+input('Press enter to finish recording')
+recorder_state = False
+
+stream.stop_stream()
+stream.close()
+p.terminate()'''
 
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
 sigstart = decode.Synch_framestart(samples_demod, int(frame_length/2))
 print(sigstart)
-sigstart = 300 + Lp
+#sigstart = 300 + Lp
 
 
 '''P = decode.Synch_P(samples_demod, int(frame_length/2))
@@ -51,6 +83,7 @@ plt.show()'''
 
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]						#slice out second synch block
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)		#get gains from second synch block
+print(gains[:10])
 
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
@@ -67,8 +100,8 @@ for i in range(transmit_frames):
 
 data_out = data_output.demodulate(QAM_values, QAM)
 
-#we know we only sent one frame
-data_out = data_out[:(2*QAM*symbol_length)]
+#we know we only sent 10 frames
+data_out = data_out[:(2*QAM*symbol_length)*10]
 
 
 with open("start_bits.txt", 'r') as fin:
@@ -79,9 +112,7 @@ transmitted = np.delete(transmitted, -1)
 transmitted = np.array(transmitted, dtype = int)
 data_out = np.array(data_out, dtype = int)
 
-print(data_out)
-print(transmitted)
-
+print(data_out[:10])
 errors = np.bitwise_xor(transmitted,data_out)
 print('Error rate = ',np.sum(errors)/len(data_out))
 

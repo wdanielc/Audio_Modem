@@ -33,11 +33,9 @@ def QAM_nearest_neighbour(QAM_value, QAM):
     QAM_value *= QAM_norm[QAM-1]**0.5
     a = np.real(QAM_value)
     b = np.imag(QAM_value)
-    print(b)
     a = (a + 2**QAM)/2
     a = np.clip(int(np.floor(a)),0,(2**QAM)-1)
     b = np.clip(int(np.floor((b + 2**QAM)/2)),0,(2**QAM)-1)
-    print(b)
     a = grey2bin(a)
     b = grey2bin(b)
     var = (b << QAM) ^ (a)

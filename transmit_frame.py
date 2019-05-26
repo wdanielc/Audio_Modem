@@ -6,7 +6,7 @@ Created on Mon May 13 14:15:46 2019
 @author: wdc24
 """
 import encoding_functions as encode
-#import audio_functions as audio
+import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -16,10 +16,10 @@ import data_input as data
 import wave
 
 Fs = 44000
-dF = 1000
+dF = 100
 QAM = 1
-symbol_length = 16
-Lp = 8
+symbol_length = 128
+Lp = 350
 Fc = 10500
 
 volume = 1.0
@@ -28,8 +28,7 @@ volume = 1.0
 # This is a list of QAM values of the data
 
 frame_length_bits = symbol_length*2*QAM
-data_bits = np.random.randint(2, size=frame_length_bits)	#generate random sequence of length = 1 frame
-print(data_bits[:10])
+data_bits = np.random.randint(2, size=frame_length_bits*10)	#generate random sequence of length = 10 frame
 with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
 		fout.write(str(value) + '\n')
@@ -53,7 +52,4 @@ with open("transmit_frame.txt", 'w') as fout:
 		fout.write(str(value) + '\n')
 
 
-#audio.play(transmit, volume, Fs)
-
-
-#plt.show()
+audio.play(transmit, volume, Fs)
