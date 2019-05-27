@@ -1,9 +1,9 @@
-from ldpc_jossy.py import ldpc
+from ldpcPy import ldpc
 import numpy as np 
 import math
 
 def encode(data, standard = '802.11n', rate = '1/2',  ptype='A'):
-	KoverZ = GetKoverZ(standard, rate,  ptype)
+	KoverZ = GetNKoverZ(True, standard, rate,  ptype)
 	z = int(math.ceil(data.shape[0]/KoverZ))	#determine z to fit entire data stream in 1 code block
 	k = KoverZ*z
 	data = np.append(data, np.zeros(k-(((data.shape[0]-1)%k)+1)))	#append zeros to data to fit into block code
@@ -12,7 +12,26 @@ def encode(data, standard = '802.11n', rate = '1/2',  ptype='A'):
 	return x
 
 
-def GetKoverZ(standard, rate,  ptype):
+def decode(code, standard = '802.11n', rate = '1/2',  ptype='A'):
+	NoverZ = GetNKoverZ(False, standard, rate,  ptype)
+	z = int(len(code)/NoverZ)
+	c = ldpc.code(standard = standard, rate = rate, z=z, ptype=ptype)
+	app, it = c.decode(code, 'sumprod2')
+	print(app.shape)
+	MLValues = np.vectorize(MLValue)
+	values = MLValues(app)
+	return values
+
+
+def MLValue(Likelihood):
+	if Likelihood == 0:
+		value = 0
+	else:
+		value = 1
+	return value
+
+
+def GetNKoverZ(NK, standard, rate,  ptype): #NK = True for get K/z, False for get N/z
 	if standard == "802.16":
 		if rate == '1/2':
 			proto = np.array([
@@ -227,5 +246,8 @@ def GetKoverZ(standard, rate,  ptype):
 			raise NameError('802.11n invalid z (must be 27,54 or 81)')
 	else:
 		raise NameError('IEEE standard unknown')
-	KoverZ = proto.shape[1] - proto.shape[0]
-	return KoverZ
+	if NK:
+		NKoverZ = proto.shape[1] - proto.shape[0]
+	else:
+		NKoverZ = proto.shape[1]
+	return NKoverZ
