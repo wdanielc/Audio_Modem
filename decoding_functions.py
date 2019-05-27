@@ -96,9 +96,9 @@ def Synch_framestart(signal,L,spread=300,threshold=0.8):
     R = Synch_R(signal,L)
     R = maximum_filter1d(R,spread)
     M = ((np.abs(P))**2)/(R**2)
-    start, end = longest_block((M>threshold),0)
+    start, end = longest_block((M>threshold),0)[:2]
     frame_start = int((start+end)/2)
-    freq_offset = np.angle(P(frame_start))
+    freq_offset = np.angle(P[start:end])
     return frame_start, freq_offset
 
 def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):

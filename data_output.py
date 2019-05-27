@@ -6,12 +6,11 @@ from data_input import bits2ints
 # Takes boolean array and writes it to file
 def write_data(bits, file="received.txt"):
 
-    #data_out = bytes([int(byte) for byte in bits2bytes(bits)])
+    data_out = bytes(int(byte) for byte in bits2bytes(bits))
+    print(type(data_out))
 
     with open(file, 'wb') as fout:
-        for byte in bits2bytes(bits):
-            print(int(byte), bytes(int(byte)))
-            fout.write(bytes([int(byte)]))
+        fout.write(data_out)
 
     return None
 

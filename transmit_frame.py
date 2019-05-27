@@ -12,15 +12,17 @@ import matplotlib.pyplot as plt
 from scipy import signal
 import data_input as data
 #import time
-#import pyaudio as pa
+import pyaudio as pa
 import wave
+#from config import *
+
 
 Fs = 44000
 dF = 100
 QAM = 1
 symbol_length = 128
 Lp = 350
-Fc = 10500
+Fc = 10050
 
 volume = 1.0
 
@@ -29,7 +31,8 @@ volume = 1.0
 
 frame_length_bits = symbol_length*2*QAM
 #data_bits = np.random.randint(2,size=frame_length_bits*100)	#generate random sequence of length = 10 frame
-data_bits = data.get_data("hamlet_semiabridged.txt")[:100*frame_length_bits]
+data_bits = data.get_data("hamlet_semiabridged.txt")#[:1000*frame_length_bits]
+#data_bits = np.ones(frame_length_bits*500, dtype=int)
 with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
 		fout.write(str(value) + '\n')
