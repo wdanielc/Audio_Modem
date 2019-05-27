@@ -1,6 +1,6 @@
 import encoding_functions as encode
 import decoding_functions as decode
-import audio_functions as audio
+#import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -8,7 +8,7 @@ import data_input
 import data_output
 import wave
 import channel
-import pyaudio as pa
+#import pyaudio as pa
 from scipy.ndimage.filters import maximum_filter1d
 #from config import *
 
@@ -28,47 +28,43 @@ frame_length_samples = frame_length + Lp
 #h = [np.exp(-2*i/h_length) for i in range(h_length)]
 
 
-#samples = channel.get_received(sigma=0.01, h = h, ISI=True, file = "transmit_frame.txt")
+samples = channel.get_received(sigma=0.01, h = 1, ISI=True, file = "transmit_frame.txt")
 
 
-samples = []
-recorder_state = False
-record_buffer_length = 1000 # recording buffer length
+#samples = []
+#recorder_state = False
+#record_buffer_length = 1000 # recording buffer length
+#
+#
+#def callback(in_data, frame_count, time_info, status):
+#	global samples, recorder_state
+#
+#	mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
+#
+#	if recorder_state:
+#		samples.extend(mysamples)
+#
+#	return(in_data, pa.paContinue) # returning is compulsory even in playback mode
+#
+#
+#p = pa.PyAudio()
+#stream = p.open(format=pa.paFloat32, channels=1, rate=Fs,
+#               stream_callback=callback, input=True,
+#               frames_per_buffer=record_buffer_length)
+#stream.start_stream()
+#
+#
+#input('Press enter when ready to record')
+#recorder_state = True
+#input('Press enter to finish recording')
+#recorder_state = False
+#
+#stream.stop_stream()
+#stream.close()
+#p.terminate()
+#
+#
 
-
-def callback(in_data, frame_count, time_info, status):
-	global samples, recorder_state
-
-	mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
-
-	if recorder_state:
-		samples.extend(mysamples)
-
-	return(in_data, pa.paContinue) # returning is compulsory even in playback mode
-
-
-p = pa.PyAudio()
-stream = p.open(format=pa.paFloat32, channels=1, rate=Fs,
-               stream_callback=callback, input=True,
-               frames_per_buffer=record_buffer_length)
-stream.start_stream()
-
-
-input('Press enter when ready to record')
-recorder_state = True
-input('Press enter to finish recording')
-recorder_state = False
-
-stream.stop_stream()
-stream.close()
-p.terminate()
-
-
-samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
-sigstart, freq_offset = decode.Synch_framestart(samples_demod, int(frame_length/2))
-plt.plot(freq_offset)
-#print(sigstart)
-#sigstart = 300 + Lp
 
 """
 P = decode.Synch_P(samples_demod, int(frame_length/2))
@@ -83,9 +79,29 @@ plt.gca().legend()
 plt.show()
 """
 
+samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
+sigstart, freq_offset = decode.Synch_framestart(samples_demod, int(frame_length/2))
+sigstart = sigstart-Lp
+
+
+blocks, residuals = decode.split_samples(samples[sigstart:],0,frame_length,Lp)
+estimation_frame = blocks[1]
+gains = decode.get_gains2(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs)
+
+blocks = blocks[2:]
+residuals = residuals[2:]
+transmit_frames = len(blocks)
+
+QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
+
+for i in range(transmit_frames):
+	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,residuals[i])
+
+data_out = data_output.demodulate(QAM_values, QAM)
+
+""" OLD DEDCODING
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]						#slice out second synch block
 gains = decode.get_gains(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Lp,Fc,dF)		#get gains from second synch block
-print(gains[:10])
 
 
 time_data = samples[sigstart + 2*frame_length + Lp:]
@@ -101,6 +117,7 @@ for i in range(transmit_frames):
 
 
 data_out = data_output.demodulate(QAM_values, QAM)
+"""
 
 #we know we only sent 10 frames
 #data_out = data_out[:(2*QAM*symbol_length)*100]

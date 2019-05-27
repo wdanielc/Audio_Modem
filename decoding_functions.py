@@ -98,10 +98,52 @@ def Synch_framestart(signal,L,spread=300,threshold=0.8):
     M = ((np.abs(P))**2)/(R**2)
     start, end = longest_block((M>threshold),0)[:2]
     frame_start = int((start+end)/2)
-    freq_offset = np.angle(P[start:end])
+    freq_offset = np.mean(np.angle(P[start:end]))
     return frame_start, freq_offset
 
 def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
     estimate_spectrum = OFDM(estimation_frame, np.ones(symbol_length), symbol_length,Lp,Fc,dF)
 
     return np.divide(estimate_spectrum, sent_spectrum)
+
+def split_samples(signal,freq_offset,frame_length,Lp):
+    frame_length_samples = frame_length + Lp
+    #sample_shift_per_frame = (frame_length_samples/frame_length)*(freq_offset/np.pi)
+    shifted_frame_length = frame_length_samples #+ sample_shift_per_frame
+    n = int(np.ceil(len(signal)/shifted_frame_length))
+    signal = np.append(signal,np.zeros(int(np.floor(shifted_frame_length))))
+    frame = 0
+    frames = np.zeros([n,frame_length])
+    residual = np.zeros(n)
+    for i in range(n):
+        frame = frame + shifted_frame_length
+        frame_end = int(np.floor(frame))
+        frame_start = frame_end - frame_length
+        frames[i,:] = signal[frame_start:frame_end]
+        residual[i] = (frame - frame_end)
+    return frames, residual
+
+def OFDM2(received,gains,symbol_length,Fc,dF,Fs,residual):
+    spectrum = np.fft.fft(received,int(Fs/dF))
+    sigstart = (Fc/dF) + 0.5 - symbol_length/2
+    sigstart = int(round(sigstart))
+    sigend = sigstart + symbol_length
+    scaled_symbol = spectrum[sigstart:sigend]	#input signal scaled by complex channel gains
+    phase_shifts = np.arange(len(scaled_symbol))
+    phase_shifts = phase_shifts * (residual*2*np.pi)/Fs
+    phase_shifts = np.exp(1j*phase_shifts)
+    scaled_symbol = scaled_symbol * phase_shifts
+    symbol = np.divide(scaled_symbol,gains)
+    return symbol
+
+def get_gains2(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs):
+    estimate_spectrum = OFDM2(estimation_frame, np.ones(symbol_length), symbol_length,Fc,dF,Fs,0)
+
+    return np.divide(estimate_spectrum, sent_spectrum)
+
+
+
+
+
+
+
