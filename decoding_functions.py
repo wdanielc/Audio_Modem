@@ -61,12 +61,45 @@ def Synch_R(signal,L):
         R[d+1] = R[d] + ri[d+L] - ri[d]
     return R
 
-def Synch_framestart(signal,L,spread=300):
+def longest_block(list_in,allowed_zeros=0):
+    l = len(list_in)
+    b_start = []
+    b_end = []
+    b_length = [] #this is NOT end - start)
+    for i in range(l):
+        if (i == 0) and (list_in[i] == 1):
+            c = True
+        elif (list_in[i-1] == 0) and (list_in[i] == 1):
+            c = True
+        else:
+            c = False
+        if c:
+            this_end = i;
+            this_length = 1;
+            this_zeros = 0
+            for j in range(i+1,l):
+                if list_in[j] == 1:
+                    this_length += 1
+                    this_end = j
+                else:
+                    this_zeros += 1
+                if this_zeros > allowed_zeros:
+                    break
+            b_start.append(i)
+            b_end.append(this_end)
+            b_length.append(this_length)
+    i = np.argmax(b_length);
+    return b_start[i], b_end[i], b_length[i]
+
+def Synch_framestart(signal,L,spread=300,threshold=0.8):
     P = Synch_P(signal,L)
     R = Synch_R(signal,L)
     R = maximum_filter1d(R,spread)
     M = ((np.abs(P))**2)/(R**2)
-    return np.argmax(M)
+    start, end = longest_block((M>threshold),0)
+    frame_start = int((start+end)/2)
+    freq_offset = np.angle(P(frame_start))
+    return frame_start, freq_offset
 
 def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
     estimate_spectrum = OFDM(estimation_frame, np.ones(symbol_length), symbol_length,Lp,Fc,dF)
