@@ -54,6 +54,7 @@ def randQAM(symbol_length):
         randQAM2[i] = QAM(randbits2[i],1)
         if i % 2 == 0:
             randQAM1[i] = QAM(randbits1[i],1)
+    randQAM1 = randQAM1 * (2**0.5) #as it only contains half the no. of symbols, increase the energy
     return randQAM1, randQAM2
 
 def Synch_prefix(symbol_length,Lp,Fc,Fs,dF):
