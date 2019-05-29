@@ -1,6 +1,6 @@
 import encoding_functions as encode
 import decoding_functions as decode
-#import audio_functions as audio
+import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
@@ -8,15 +8,16 @@ import data_input
 import data_output
 import wave
 import channel
-#import pyaudio as pa
+import pyaudio as pa
 from scipy.ndimage.filters import maximum_filter1d
 #from config import *
+import shelve
 
 
 Fs = 44000
-dF = 100
+dF = 16
 QAM = 1
-symbol_length = 128
+symbol_length = 1024
 Lp = 350
 Fc = 10050
 frame_length = int(Fs/dF)
@@ -31,39 +32,39 @@ frame_length_samples = frame_length + Lp
 samples = channel.get_received(sigma=0.01, h = 1, ISI=True, file = "transmit_frame.txt")
 
 
-#samples = []
-#recorder_state = False
-#record_buffer_length = 1000 # recording buffer length
-#
-#
-#def callback(in_data, frame_count, time_info, status):
-#	global samples, recorder_state
-#
-#	mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
-#
-#	if recorder_state:
-#		samples.extend(mysamples)
-#
-#	return(in_data, pa.paContinue) # returning is compulsory even in playback mode
-#
-#
-#p = pa.PyAudio()
-#stream = p.open(format=pa.paFloat32, channels=1, rate=Fs,
-#               stream_callback=callback, input=True,
-#               frames_per_buffer=record_buffer_length)
-#stream.start_stream()
-#
-#
-#input('Press enter when ready to record')
-#recorder_state = True
-#input('Press enter to finish recording')
-#recorder_state = False
-#
-#stream.stop_stream()
-#stream.close()
-#p.terminate()
-#
-#
+samples = []
+recorder_state = False
+record_buffer_length = 1000 # recording buffer length
+
+
+def callback(in_data, frame_count, time_info, status):
+	global samples, recorder_state
+
+	mysamples = np.frombuffer(in_data, dtype=np.float32, count=frame_count)
+
+	if recorder_state:
+		samples.extend(mysamples)
+
+	return(in_data, pa.paContinue) # returning is compulsory even in playback mode
+
+
+p = pa.PyAudio()
+stream = p.open(format=pa.paFloat32, channels=1, rate=Fs,
+               stream_callback=callback, input=True,
+               frames_per_buffer=record_buffer_length)
+stream.start_stream()
+
+
+input('Press enter when ready to record')
+recorder_state = True
+input('Press enter to finish recording')
+recorder_state = False
+
+stream.stop_stream()
+stream.close()
+p.terminate()
+
+
 
 
 """
@@ -82,6 +83,7 @@ plt.show()
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
 sigstart, freq_offset = decode.Synch_framestart(samples_demod, int(frame_length/2))
 sigstart = sigstart-Lp
+print(sigstart)
 
 
 blocks, residuals = decode.split_samples(samples[sigstart:],0,frame_length,Lp)
@@ -150,6 +152,19 @@ errors = np.bitwise_xor(transmitted,data_out)
 print('Error rate = ',np.sum(errors)/len(data_out))
 
 data_output.write_data(data_out, "receive_frame.txt")
+
+received = shelve.open("errors")
+#received['different'] = error_rates
+
+same = received['same']
+different = received['different']
+
+plt.figure()
+plt.plot(same, label='Same Laptop')
+plt.plot(different, label='Different Laptops')
+plt.legend()
+plt.xlabel('Values')
+plt.ylabel('Error rate')
 
 plt.show()
 

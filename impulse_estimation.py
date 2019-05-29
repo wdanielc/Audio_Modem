@@ -4,12 +4,14 @@ from scipy import signal
 import matplotlib.pyplot as plt
 import audio_functions
 import time
+from scipy.signal import butter, lfilter
+import shelve
 
 fs = 44100
 
 samples = [] # this will hold the recorded samples
 # THE TRESHOLD VALUE IS HEURISTIC AND YOU MAY WANT TO PLAY WITH IT...
-threshold = 15.0 # experimented with this empirically- 15 seems like a good value at least with my equipment- Andreas
+threshold = 25.0 # experimented with this empirically- 15 seems like a good value at least with my equipment- Andreas
 background_power = 0.0 # mean power before the signal starts (to be measured)
 L_init_samples = fs # number of initial samples to determine background mean power
 # the recorder state variable tells the callback function in what phase it is and
@@ -96,17 +98,44 @@ p.terminate()
 def get_h():
     return samples
 
+samplestart=0
 
 for i in range(len(samples)):
     if abs(samples[i]) > 1:
         samplestart = i
         break
 
-samples = samples[samplestart:]
+samples = samples[samplestart-50:samplestart+1950]
+#b, a = butter(5,1000/44100)
+#samples = lfilter(b, a, samples)
+#samples = np.convolve(samples, np.hamming(21))
 plt.plot(samples)
-plt.show()
+plt.xlabel('samples')
+plt.ylabel('Response')
 
+plt.savefig("./impulse_responses/DPO.png", dpi=300, bbox_inches='tight')
+
+impulses = shelve.open('impulses')
+impulses['DPO'] = samples
 
 with open("impulse.txt", 'w') as fout:
     for value in samples[:500]:
         fout.write(str(value) + '\n')
+
+plt.figure()
+echo = impulses['echo']
+outside = impulses['outside']
+dpo = impulses['DPO']
+
+plt.plot(echo, label='Echo', alpha=1, color='blue')
+#plt.plot(dpo, label='DPO', alpha=0.8, color='red')
+plt.plot(outside, label='Outside', alpha=0.8, color='orange')
+
+plt.legend()
+
+plt.xlabel('Samples')
+plt.ylabel('Response')
+
+plt.savefig("./impulse_responses/impulse_responses.png", dpi=300, bbox_inches='tight')
+
+plt.show()

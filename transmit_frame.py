@@ -18,9 +18,9 @@ import wave
 
 
 Fs = 44000
-dF = 100
+dF = 16
 QAM = 1
-symbol_length = 128
+symbol_length = 1024
 Lp = 350
 Fc = 10050
 
@@ -45,7 +45,9 @@ QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
 
 for i in range(transmit_frames):
-	transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(QAM_values[i * symbol_length:(i + 1) * symbol_length], Lp, Fc, Fs, dF)
+	#waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], Nf, Hf, 1, dF, symbol_length)
+	waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
+	transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(waterfilled_QAM, Lp, Fc, Fs, dF)
 
 
 transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))

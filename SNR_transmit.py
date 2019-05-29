@@ -7,7 +7,9 @@ symbol_length = 1024
 
 QAM_values = np.ones(symbol_length, dtype=np.complex)
 
-transmit = np.tile(encode.OFDM(QAM_values, Lp, Fc, Fs, dF), 2)
+white_noise = (np.clip(np.random.normal(0.0,0.2,frame_length + Lp),-1.0, 1.0)).astype(np.float32)
+
+transmit = np.tile(white_noise, 2)
 transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
 
 audio.play(transmit, volume, Fs)
