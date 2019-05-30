@@ -1,5 +1,5 @@
 import numpy as np
-from encoding_functions import grey2bin
+import encoding_functions as encode
 from scipy.signal import butter, lfilter
 from scipy.ndimage.filters import maximum_filter1d
 
@@ -36,10 +36,24 @@ def QAM_nearest_neighbour(QAM_value, QAM):
     a = (a + 2**QAM)/2
     a = np.clip(int(np.floor(a)),0,(2**QAM)-1)
     b = np.clip(int(np.floor((b + 2**QAM)/2)),0,(2**QAM)-1)
-    a = grey2bin(a)
-    b = grey2bin(b)
+    a = encode.grey2bin(a)
+    b = encode.grey2bin(b)
     var = (b << QAM) ^ (a)
     return var
+
+def QAM_LLR(QAM_value, QAM):
+    Binaries = np.arange((2*QAM)**2)
+    bin2QAM = np.vectorize(encode.QAM)
+    Constellation =  bin2QAM(Binaries,QAM)
+    Distance = np.zeros(len(Binaries))
+    for i in range(len(Binaries)):  #calculate distances to each point in constellation
+        Distance[i] = abs(QAM_value - Constellation[i])
+    for i in range(2*QAM):
+        #WIP
+
+    return(LLRs)
+
+    
 
 
 def Synch_P(signal,L):
