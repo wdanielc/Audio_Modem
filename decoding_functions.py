@@ -125,14 +125,16 @@ def split_samples(signal,freq_offset,frame_length,Lp):
 
 def OFDM2(received,gains,symbol_length,Fc,dF,Fs,residual):
     spectrum = np.fft.fft(received,int(Fs/dF))
+    
+    phase_shifts = np.arange(len(spectrum))
+    phase_shifts = phase_shifts * ( (residual*2*np.pi)/(Fs*len(spectrum)) )
+    phase_shifts = np.exp(1j*phase_shifts)
+    spectrum  = spectrum * phase_shifts
+    
     sigstart = (Fc/dF) + 0.5 - symbol_length/2
     sigstart = int(round(sigstart))
     sigend = sigstart + symbol_length
     scaled_symbol = spectrum[sigstart:sigend]	#input signal scaled by complex channel gains
-    phase_shifts = np.arange(len(scaled_symbol))
-    phase_shifts = phase_shifts * (residual*2*np.pi)/Fs
-    phase_shifts = np.exp(1j*phase_shifts)
-    scaled_symbol = scaled_symbol * phase_shifts
     symbol = np.divide(scaled_symbol,gains)
     return symbol
 
