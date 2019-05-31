@@ -41,16 +41,32 @@ def QAM_nearest_neighbour(QAM_value, QAM):
     var = (b << QAM) ^ (a)
     return var
 
-def QAM_LLR(QAM_value, QAM):
-    Binaries = np.arange((2*QAM)**2)
+def distance_to_Likelihood(d, sigma2):  #calculate pmf of d for 0 mean gaussian with var sigma2, ignore constant scaling value as will be same number on top and bottom
+    a = np.exp(-(d**2)/(2*sigma2))
+    return a
+
+
+def QAM_LLR(QAM_value, QAM, sigma2): #sigma2 corresponds to noise variance in QAM plane
+    Binaries = np.arange((2*QAM)**2)    
     bin2QAM = np.vectorize(encode.QAM)
     Constellation =  bin2QAM(Binaries,QAM)
     Distance = np.zeros(len(Binaries))
     for i in range(len(Binaries)):  #calculate distances to each point in constellation
         Distance[i] = abs(QAM_value - Constellation[i])
+    distances_to_Likelihoods = np.vectorize(distance_to_Likelihood)
+    Likelihoods = distances_to_Likelihoods(Distance, sigma2)
+    LLRs = np.zeros(2*QAM)
     for i in range(2*QAM):
-        #WIP
-
+        zeros = 0
+        ones = 0
+        for k in range(len(Binaries)):
+            if ((Binaries[k] >> (3-i)) & 1) == 1:
+                ones += Likelihoods[k]
+            else:
+                zeros += Likelihoods[k]
+        zeros = np.log(zeros)
+        ones = np.log(ones)
+        LLRs[i] = zeros - ones
     return(LLRs)
 
     
