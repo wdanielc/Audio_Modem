@@ -59,7 +59,7 @@ for i in range(transmit_frames):
 
 rand2 = encode.randQAM(symbol_length)[1]
 out2 = encode.OFDM(rand2,Lp,Fc,Fs,dF)
-out2 = out*4
+out2 = out2*4
 
 transmit = np.insert(transmit,0,out2) #so we have 5 gain estimation blocks
 
