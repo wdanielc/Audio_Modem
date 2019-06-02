@@ -51,6 +51,10 @@ for i in range(transmit_frames):
 
 
 transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
+# Truncate to remove spikes from the signal
+transmit = np.clip(transmit,-0.1,0.1)
+transmit = transmit/max(abs(transmit))
+print(max(np.abs(transmit)), min(np.abs(transmit)), np.mean(np.abs(transmit)), np.std(np.abs(transmit)))
 
 
 with open("transmit_frame.txt", 'w') as fout:
@@ -59,3 +63,4 @@ with open("transmit_frame.txt", 'w') as fout:
 
 
 audio.play(transmit, volume, Fs)
+plt.show()
