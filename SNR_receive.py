@@ -73,33 +73,30 @@ input('Press Enter when ready to record transmitted white noise')
 signal_samples = audio.record(duration, Fs, record_buffer_length)
 print('Done!')
 
-file['signal_samples'] = signal_samples
-
 input('Press Enter when ready to record background noise')
 noise_samples = audio.record(duration, Fs, record_buffer_length)
 print('Done!')
 
-file['noise_samples'] = noise_samples
-
 SNR = np.divide(np.abs(np.fft.fft(signal_samples)), np.abs(np.fft.fft(noise_samples)))
 
 SNR = np.array([np.mean(SNR[i * duration: (i + 1) * duration]) for i in range(22000)])
+noise_samples = np.array([np.mean(np.abs(noise_samples[i * duration: (i + 1) * duration])) for i in range(22000)])
+
+noise = np.zeros(symbol_length)
+for i in range(symbol_length):
+    noise[i] = np.mean(noise_samples[(Fc - int(symbol_length*dF/2)) + i * dF:(Fc - int(symbol_length*dF/2)) + (i + 1) * dF])
+
+file['noise'] = noise
 
 B = np.mean(np.divide(np.ones(len(SNR)), SNR)) + np.std(np.divide(np.ones(len(SNR)), SNR)) * 3
 file['B'] = B
 
-tic = time.time()
 file['SNR'] = SNR
-toc = time.time()
-print(toc-tic)
 
-
-signal_samples = file['signal_samples']
-noise_samples = file['noise_samples']
-SNR = file['SNR']
+file.close()
 
 plt.figure()
-plt.plot(SNR)
+plt.plot(noise)
 
 plt.figure()
 #plt.plot(np.arange(int(len(SNR)/2))/5, SNR[:int(len(SNR)/2)])

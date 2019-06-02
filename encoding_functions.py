@@ -70,7 +70,6 @@ def waterfilling(QAM_values, SNR, B, dF, Fc, symbol_length):
     for i in range(symbol_length):
         channel_noise_gains[i] = np.mean(SNR[(Fc - int(symbol_length*dF/2))
                                              + i * dF:(Fc - int(symbol_length*dF/2)) + (i + 1) * dF])
-        #print((Fc - int(symbol_length/2)) + i * dF)
 
     channel_noise_gains = np.divide(np.ones(symbol_length), channel_noise_gains)
     #B = np.mean(channel_noise_gains) + np.std(channel_noise_gains) * 3
