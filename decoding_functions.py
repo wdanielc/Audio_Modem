@@ -188,7 +188,7 @@ def test_offset(signal, start, L, Lp):
     for i in range(reps):
         this_end = start + int(np.floor(i*(L + Lp)))
         this_start = this_end - int(np.ceil(Lp))
-        S += ( P[this_start:this_end] * triang(Lp) ) 
+        S += np.abs(np.sum( P[this_start:this_end] * triang(Lp) )) 
     return
 
 def get_freq_offset(signal, phase_offset, dF, Fs, start, frame_length, Lp, offsets):
