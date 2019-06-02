@@ -1,13 +1,19 @@
 import decoding_functions as decode
 import numpy as np
 from data_input import bits2ints
+import shelve
 
 
 # Takes boolean array and writes it to file
 def write_data(bits, file="received.txt"):
 
     data_out = bytes(int(byte) for byte in bits2bytes(bits))
-    print(type(data_out))
+
+    if file[-3:] == 'bmp':
+        bmp = shelve.open('bmp')
+        header = bmp['header']
+        bmp.close()
+        data_out = header + data_out
 
     with open(file, 'wb') as fout:
         fout.write(data_out)

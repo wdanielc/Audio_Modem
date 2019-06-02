@@ -1,5 +1,6 @@
 import numpy as np
 import encoding_functions as encode
+import shelve
 
 
 """This takes a file and returns a bit stream in the form of a np array"""
@@ -7,6 +8,13 @@ def get_data(file):
 
     with open(file, 'rb') as fin:
         data = fin.read()
+
+    if file[-3:] == 'bmp':
+        header = data[:54]
+        bmp = shelve.open('bmp')
+        bmp['header'] = header
+        bmp.close()
+        data = data[54:]
 
     out = np.zeros(len(data)*8)
     for i in range(len(data)):
