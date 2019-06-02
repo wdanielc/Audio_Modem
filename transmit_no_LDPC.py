@@ -36,12 +36,14 @@ SNR = file['SNR']
 B = file['B']
 
 for i in range(transmit_frames):
-	waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], SNR, B, dF, Fc, symbol_length)
-	#waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
+	#waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], SNR, B, dF, Fc, symbol_length)
+	waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
 	transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(waterfilled_QAM, Lp, Fc, Fs, dF)
 
+synch_blocks = int(np.ceil(transmit_frames/4))
 
-transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
+for i in range(synch_blocks,0,-1):
+	transmit = np.insert(transmit,(i-1)*frame_length_samples*4,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
 # Truncate to remove spikes from the signal
 lim = np.std(np.abs(transmit)) * 3
 transmit = np.clip(transmit,-lim,lim)
