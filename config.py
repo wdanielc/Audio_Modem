@@ -3,10 +3,10 @@
 # General variables
 volume = 1.0 # Playback volume
 
-filename = "hamlet_semiabridged.txt"
+filename = "hamlet.txt"
 # Modulation_type_OFDM = True  #True for OFDM, False for DMT
 Fs = 44000
-dF = 16
+dF = 10
 QAM = 1
 symbol_length = 1024
 Lp = 350
