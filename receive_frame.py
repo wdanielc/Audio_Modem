@@ -89,33 +89,31 @@ print(sigstart)
 freq_offset = decode.get_freq_offset(samples_demod, phase_offset, dF, Fs, edge_start, frame_length, Lp, np.arange(-10,10));
 
 blocks, residuals = decode.split_samples(samples[sigstart:],phase_offset,freq_offset,frame_length,Lp)
-estimation_frame = blocks[1:6]
-'''gains = np.zeros(symbol_length)
+estimation_frame = blocks[1:5]
+gains = np.zeros(symbol_length)
 
-for i in range(5):
+for i in range(4):
 	gains = gains + decode.get_gains2(estimation_frame[i],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, residuals[i+1])
-gains = np.divide(gains,5)
-'''
+gains = np.divide(gains,4)
+
 noisevar = np.zeros(symbol_length)
 
-gains = decode.get_gains2(estimation_frame[0],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, residuals[1])
+#gains = decode.get_gains2(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, residuals[1])
 
-for i in range(5):
+for i in range(4):
 	noisevar = noisevar + decode.get_noisevar(estimation_frame[i],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, gains)
-noisevar = np.divide(noisevar, 5)
+noisevar = np.divide(noisevar, 4)
 
-blocks = blocks[6:]
-residuals = residuals[6:]
+blocks = blocks[5:]
+residuals = residuals[5:]
 transmit_frames = len(blocks)
+print(transmit_frames)
 
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
 
 for i in range(transmit_frames):
 	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,0)
 
-
-print(QAM_values[:10])
-print(noisevar[:10])
 
 raw_LLRs = np.zeros(len(QAM_values)*2*QAM)
 
@@ -124,12 +122,13 @@ sigma2 = file['noise']
 
 
 for i in range(len(QAM_values)):
-	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, noisevar[i % symbol_length])
+	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, 0.3)
 
-print(raw_LLRs[:10])
 
 
 data_bits_out = ldpc_functions.decode(raw_LLRs, standard = '802.16', rate = '2/3',  ptype='A' )
+
+print(data_bits_out[:20])
 
 """ OLD DEDCODING
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]						#slice out second synch block
@@ -197,6 +196,9 @@ plt.xlabel('Values')
 plt.ylabel('Error rate')
 
 plt.show()
+
+
+
 
 
 
