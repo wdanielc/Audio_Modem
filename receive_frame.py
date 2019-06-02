@@ -10,20 +10,20 @@ import wave
 import channel
 import pyaudio as pa
 from scipy.ndimage.filters import maximum_filter1d
-#from config import *
+from config import *
 import shelve
 import ldpc_functions
 
 
-Fs = 44000
-dF = 16
-QAM = 1
-symbol_length = 1024
-Lp = 350
-Fc = 10050
-frame_length = int(Fs/dF)
-frame_length_bits = symbol_length*2*QAM
-frame_length_samples = frame_length + Lp
+# Fs = 44000
+# dF = 16
+# QAM = 1
+# symbol_length = 1024
+# Lp = 350
+# Fc = 10050
+# frame_length = int(Fs/dF)
+# frame_length_bits = symbol_length*2*QAM
+# frame_length_samples = frame_length + Lp
 
 
 #h_length = 100

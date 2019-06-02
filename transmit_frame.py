@@ -14,26 +14,26 @@ import data_input as data
 #import time
 import pyaudio as pa
 import wave
-#from config import *
+from config import *
 import shelve
 import ldpc_functions
 
 
-Fs = 44000
-dF = 16
-QAM = 1
-symbol_length = 1024
-Lp = 350
-Fc = 10050
-
-volume = 1.0
+# Fs = 44000
+# dF = 16
+# QAM = 1
+# symbol_length = 1024
+# Lp = 350
+# Fc = 10050
+#
+# volume = 1.0
 
 
 # This is a list of QAM values of the data
 
 frame_length_bits = symbol_length*2*QAM
 #data_bits = np.random.randint(2,size=frame_length_bits*100)	#generate random sequence of length = 10 frame
-data_bits = data.get_data("hamlet_semiabridged.txt")#[:1000*frame_length_bits]
+data_bits = data.get_data(filename)#[:1000*frame_length_bits]
 #data_bits = np.ones(frame_length_bits*500, dtype=int)
 with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
