@@ -35,6 +35,8 @@ frame_length_bits = symbol_length*2*QAM
 #data_bits = np.random.randint(2,size=frame_length_bits*100)	#generate random sequence of length = 10 frame
 data_bits = data.get_data(filename)#[:1000*frame_length_bits]
 #data_bits = np.ones(frame_length_bits*500, dtype=int)
+
+data_bits = data_bits[:int(50*frame_length_bits*(3/2))]
 with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
 		fout.write(str(value) + '\n')
@@ -53,20 +55,19 @@ SNR = file['SNR']
 B = file['B']
 
 for i in range(transmit_frames):
-	waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], SNR, B, dF, Fc, symbol_length)
-	#waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
+	#waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], SNR, B, dF, Fc, symbol_length)
+	waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
 	transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(waterfilled_QAM, Lp, Fc, Fs, dF)
 
 
 rand2 = encode.randQAM(symbol_length)[1]
 out2 = encode.OFDM(rand2,Lp,Fc,Fs,dF)
-out2 = out2*4
+out2 = np.tile(out2,3)
 
-transmit = np.insert(transmit,0,out2) #so we have 5 gain estimation blocks
-
-transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
+transmit = np.insert(transmit,0,out2) #so we have 4 gain estimation blocks
 
 transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
+
 # Truncate to remove spikes from the signal
 
 lim = np.std(np.abs(transmit)) * 3

@@ -66,10 +66,13 @@ stream.close()
 p.terminate()
 
 
+samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
+sigstart, phase_offset, edge_start = decode.Synch_framestart(samples_demod, int(frame_length/2))
+print(phase_offset)
+sigstart = sigstart-Lp
 
 
-"""
-P = decode.Synch_P(samples_demod, int(frame_length/2))
+'''P = decode.Synch_P(samples_demod, int(frame_length/2))
 R = decode.Synch_R(samples_demod, int(frame_length/2))
 R = maximum_filter1d(R,300)
 M = ((np.abs(P))**2)/(R**2)
@@ -78,19 +81,17 @@ plt.plot(M, label = 'M')
 #plt.plot(R, label = 'R')
 plt.plot(samples, label = 'signal')
 plt.gca().legend()
-plt.show()
-"""
+plt.show()'''
 
-samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
-sigstart, phase_offset, edge_start = decode.Synch_framestart(samples_demod, int(frame_length/2))
-sigstart = sigstart-Lp
-print(sigstart)
 
 freq_offset = decode.get_freq_offset(samples_demod, phase_offset, dF, Fs, edge_start, frame_length, Lp, np.arange(-10,10));
 
 blocks, residuals = decode.split_samples(samples[sigstart:],phase_offset,freq_offset,frame_length,Lp)
 estimation_frame = blocks[1:5]
+
 gains = np.zeros(symbol_length)
+
+
 
 for i in range(4):
 	gains = gains + decode.get_gains2(estimation_frame[i],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, residuals[i+1])
@@ -107,7 +108,6 @@ noisevar = np.divide(noisevar, 4)
 blocks = blocks[5:]
 residuals = residuals[5:]
 transmit_frames = len(blocks)
-print(transmit_frames)
 
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
 

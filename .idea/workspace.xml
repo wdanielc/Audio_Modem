@@ -2,21 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5184990f-9b61-420a-b59c-f777ac3a999b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/decoding_no_LDPC.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/receive_no_LDPC.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transmit_no_LDPC.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_input.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_input.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_output.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_output.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decoding_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/decoding_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decoding_no_LDPC.py" beforeDir="false" afterPath="$PROJECT_DIR$/decoding_no_LDPC.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figures/waterfilling_real.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/waterfilling_real.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/receive_frame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/receive_frame.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shelve_files/SNR.bak" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/receive_frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/receive_frame.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/receive_no_LDPC.py" beforeDir="false" afterPath="$PROJECT_DIR$/receive_no_LDPC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/received_hamlet_semiabridged.txt" beforeDir="false" afterPath="$PROJECT_DIR$/received_hamlet_semiabridged.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/received_test_imag.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/received_test_imag.bmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shelve_files/SNR.dat" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shelve_files/SNR.dir" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.dir" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/start_bits.txt" beforeDir="false" afterPath="$PROJECT_DIR$/start_bits.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_imag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/transmit_frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/transmit_frame.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/transmit_frame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/transmit_frame.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transmit_no_LDPC.py" beforeDir="false" afterPath="$PROJECT_DIR$/transmit_no_LDPC.py" afterDir="false" />
     </list>
     <ignored path="Audio_Modem.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,52 +37,25 @@
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/decoding_no_LDPC.py">
+        <entry file="file://$PROJECT_DIR$/transmit_no_LDPC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2775">
-              <caret line="185" column="44" selection-start-line="185" selection-start-column="44" selection-end-line="185" selection-end-column="44" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="294">
+              <caret line="40" column="115" selection-start-line="40" selection-start-column="115" selection-end-line="40" selection-end-column="115" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_input.py">
+        <entry file="file://$PROJECT_DIR$/receive_frame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data_output.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/receive_no_LDPC.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
-              <caret line="109" column="9" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
+            <state relative-caret-position="371">
+              <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -94,19 +66,45 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/decoding_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1424">
+            <state relative-caret-position="-2073">
               <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transmit_no_LDPC.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/receive_no_LDPC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+            <state relative-caret-position="7">
+              <caret line="69" column="7" selection-start-line="69" selection-start-column="7" selection-end-line="69" selection-end-column="7" />
               <folding>
-                <element signature="e#106#141#0" expanded="true" />
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/decoding_no_LDPC.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2010">
+              <caret line="137" column="46" selection-start-line="137" selection-start-column="46" selection-end-line="137" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/received_hamlet_semiabridged.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_output.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -136,12 +134,12 @@
         <option value="$PROJECT_DIR$/impulse_estimation.py" />
         <option value="$PROJECT_DIR$/SNR_receive.py" />
         <option value="$PROJECT_DIR$/data_input.py" />
-        <option value="$PROJECT_DIR$/data_output.py" />
         <option value="$PROJECT_DIR$/transmit_frame.py" />
-        <option value="$PROJECT_DIR$/decoding_no_LDPC.py" />
-        <option value="$PROJECT_DIR$/receive_no_LDPC.py" />
-        <option value="$PROJECT_DIR$/transmit_no_LDPC.py" />
+        <option value="$PROJECT_DIR$/data_output.py" />
         <option value="$PROJECT_DIR$/config.py" />
+        <option value="$PROJECT_DIR$/decoding_no_LDPC.py" />
+        <option value="$PROJECT_DIR$/transmit_no_LDPC.py" />
+        <option value="$PROJECT_DIR$/receive_no_LDPC.py" />
       </list>
     </option>
   </component>
@@ -361,19 +359,38 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32886904" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22518519" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22518519" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="8" weight="0.2217262" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.21333334" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.22074074" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.21333334" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32886904" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32886904" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22518519" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.22074074" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.21333334" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32886904" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -384,7 +401,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/transmit_expts.py" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -433,20 +449,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/received.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="53" selection-start-column="53" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/transmit_frame.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -463,9 +465,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/receive_frame.jpg" />
     <entry file="file://$PROJECT_DIR$/receive_frame" />
-    <entry file="file://$PROJECT_DIR$/test_imag.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test_imag.png" />
     <entry file="file://$PROJECT_DIR$/receive_frame.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -491,13 +491,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/figures/synch_metric.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/receive_frame.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="2" selection-start-column="2" selection-end-column="2" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/figures/errors.png">
       <provider selected="true" editor-type-id="images" />
@@ -574,66 +567,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/decoding_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1424">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/receive_frame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="83" selection-start-line="83" selection-end-line="114" selection-end-column="108" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_imag.bmp">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/decoding_no_LDPC.py">
+    <entry file="file://$PROJECT_DIR$/channel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2775">
-          <caret line="185" column="44" selection-start-line="185" selection-start-column="44" selection-end-line="185" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="210">
+          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/receive_no_LDPC.py">
+    <entry file="file://$PROJECT_DIR$/received_test_imag copy.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_output.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="109" column="9" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
+        <state relative-caret-position="165">
+          <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/transmit_no_LDPC.py">
+    <entry file="file://$PROJECT_DIR$/receive_frame.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-          <folding>
-            <element signature="e#106#141#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="2" selection-start-column="2" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
+    <entry file="file://$PROJECT_DIR$/received.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state relative-caret-position="-499">
+          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_input.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
+        <state relative-caret-position="180">
           <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -644,10 +617,51 @@
     <entry file="file://$PROJECT_DIR$/received_test_imag.bmp">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_output.py">
+    <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+        <state relative-caret-position="75">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/received_hamlet_semiabridged.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transmit_no_LDPC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="40" column="115" selection-start-line="40" selection-start-column="115" selection-end-line="40" selection-end-column="115" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/receive_frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decoding_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2073">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decoding_no_LDPC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2010">
+          <caret line="137" column="46" selection-start-line="137" selection-start-column="46" selection-end-line="137" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/receive_no_LDPC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7">
+          <caret line="69" column="7" selection-start-line="69" selection-start-column="7" selection-end-line="69" selection-end-column="7" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

@@ -17,7 +17,6 @@ from config import *
 import shelve
 
 
-frame_length_bits = symbol_length*2*QAM
 data_bits = data.get_data(filename)
 
 with open("start_bits.txt", 'w') as fout:
@@ -27,6 +26,7 @@ transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 frame_length_samples = int(Fs/dF) + Lp
 
 QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
+print(QAM_values[:20])
 
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)

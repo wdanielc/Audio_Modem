@@ -135,7 +135,7 @@ def longest_block(list_in, allowed_zeros=0, find_all=False):
         centres = []
         for i in range(len(b_length)):
             if b_length[i] > 100:
-                centres.append(int((b_end[i] - b_start[i])/2))
+                centres.append(int((b_end[i] + b_start[i])/2))
         return centres
 
 

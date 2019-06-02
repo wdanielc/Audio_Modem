@@ -139,7 +139,7 @@ def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
 def split_samples(signal,phase_offset,freq_offset,frame_length,Lp):
     frame_length_samples = frame_length + Lp
     sample_shift_per_frame = (frame_length_samples/frame_length)*( freq_offset + (phase_offset/np.pi) )
-    shifted_frame_length = frame_length_samples + sample_shift_per_frame
+    shifted_frame_length = frame_length_samples #+ sample_shift_per_frame
     n = int(np.ceil(len(signal)/shifted_frame_length))
     signal = np.append(signal,np.zeros(int(np.floor(shifted_frame_length))))
     frame = 0
@@ -170,6 +170,7 @@ def OFDM2(received,gains,symbol_length,Fc,dF,Fs,residual):
 
 def get_gains2(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs, residual):
     estimate_spectrum = OFDM2(estimation_frame, np.ones(symbol_length), symbol_length,Fc,dF,Fs,residual)
+    print(estimate_spectrum[:10])
 
     return np.divide(estimate_spectrum, sent_spectrum)
 
@@ -206,6 +207,7 @@ def get_freq_offset(signal, phase_offset, dF, Fs, start, frame_length, Lp, offse
 def get_noisevar(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs, gains):
     estimate_spectrum = OFDM2(estimation_frame, np.ones(symbol_length), symbol_length,Fc,dF,Fs,0)
     scaled_estimate_spectrum = np.divide(estimate_spectrum, gains)
+    print(scaled_estimate_spectrum)
     var = np.square(np.absolute(np.subtract(scaled_estimate_spectrum, sent_spectrum)))
     return var
 
