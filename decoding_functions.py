@@ -176,8 +176,8 @@ def get_gains2(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs, residual)
 
 def triang(l):
     L = int(np.ceil(l))
-    t = np.arange(-L,0) / l
-    t = 1 + t
+    t = np.arange(0,-L,-1) / l
+    t = 1 + np.flip(t)
     t = t/np.sum(t)
     return t
 
