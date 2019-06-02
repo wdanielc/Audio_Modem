@@ -86,8 +86,9 @@ plt.show()'''
 
 freq_offset = decode.get_freq_offset(samples_demod, phase_offset, dF, Fs, edge_start, frame_length, Lp, np.arange(-10,10));
 
-blocks, residuals = decode.split_samples(samples[sigstart:],phase_offset,freq_offset,frame_length,Lp)
+blocks, residuals = decode.split_samples(samples[sigstart:],0,0,frame_length,Lp)
 estimation_frame = blocks[1:5]
+
 
 gains = np.zeros(symbol_length)
 
@@ -104,6 +105,7 @@ noisevar = np.zeros(symbol_length)
 for i in range(4):
 	noisevar = noisevar + decode.get_noisevar(estimation_frame[i],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, gains)
 noisevar = np.divide(noisevar, 4)
+noisevar[noisevar < 0.01] = 0.01
 
 blocks = blocks[5:]
 residuals = residuals[5:]
@@ -115,6 +117,7 @@ for i in range(transmit_frames):
 	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,0)
 
 
+
 raw_LLRs = np.zeros(len(QAM_values)*2*QAM)
 
 file = shelve.open('./shelve_files/SNR')
@@ -122,7 +125,10 @@ sigma2 = file['noise']
 
 
 for i in range(len(QAM_values)):
-	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, 0.3)
+	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, noisevar[i % symbol_length])
+
+print(len(raw_LLRs))
+print(len(np.argwhere(np.isnan(raw_LLRs))))
 
 
 

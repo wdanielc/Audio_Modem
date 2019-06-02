@@ -67,6 +67,10 @@ def QAM_LLR(QAM_value, QAM, sigma2): #sigma2 corresponds to noise variance in QA
         zeros = np.log(zeros)
         ones = np.log(ones)
         LLRs[i] = zeros - ones
+        if np.isnan(LLRs[i]):
+            print(zeros)
+            print(ones)
+
     return(LLRs)
 
     
@@ -139,7 +143,7 @@ def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
 def split_samples(signal,phase_offset,freq_offset,frame_length,Lp):
     frame_length_samples = frame_length + Lp
     sample_shift_per_frame = (frame_length_samples/frame_length)*( freq_offset + (phase_offset/np.pi) )
-    shifted_frame_length = frame_length_samples #+ sample_shift_per_frame
+    shifted_frame_length = frame_length_samples + sample_shift_per_frame
     n = int(np.ceil(len(signal)/shifted_frame_length))
     signal = np.append(signal,np.zeros(int(np.floor(shifted_frame_length))))
     frame = 0
