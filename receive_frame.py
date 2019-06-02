@@ -96,7 +96,7 @@ estimation_frame = blocks[1:6]
 gains = np.zeros(symbol_length)
 
 for i in range(5):
-	gains = gains + decode.get_gains2(estimation_frame[i],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs)
+	gains = gains + decode.get_gains2(estimation_frame[i],encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs, residuals[i+1])
 gains = np.divide(gains,5)
 
 noisevar = np.zeros(symbol_length)
