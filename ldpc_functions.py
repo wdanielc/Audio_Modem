@@ -14,16 +14,17 @@ def encode(data, standard = '802.11n', rate = '1/2',  ptype='A'):
 
 def decode(LLRs, standard = '802.11n', rate = '1/2',  ptype='A'):
 	NoverZ = GetNKoverZ(False, standard, rate,  ptype)
+	KoverZ = GetNKoverZ(True, standard, rate,  ptype)
 	z = int(len(LLRs)/NoverZ)
 	c = ldpc.code(standard = standard, rate = rate, z=z, ptype=ptype)
 	app, it = c.decode(LLRs, 'sumprod2')
-	print(app.shape)
 	MLValues = np.vectorize(MLValue)
 	values = MLValues(app)
-	return values
+	infobits = values[:KoverZ*z]
+	return infobits
 
 
-def MLValue(Likelihood):
+def MLValue(LLR):
 	if LLR > 0:
 		value = 0
 	else:

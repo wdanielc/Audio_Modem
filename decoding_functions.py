@@ -60,7 +60,7 @@ def QAM_LLR(QAM_value, QAM, sigma2): #sigma2 corresponds to noise variance in QA
         zeros = 0
         ones = 0
         for k in range(len(Binaries)):
-            if ((Binaries[k] >> (3-i)) & 1) == 1:
+            if ((Binaries[k] >> ((2*QAM-1)-i)) & 1) == 1:
                 ones += Likelihoods[k]
             else:
                 zeros += Likelihoods[k]
