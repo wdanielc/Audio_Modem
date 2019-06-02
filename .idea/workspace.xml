@@ -2,40 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5184990f-9b61-420a-b59c-f777ac3a999b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/decoding_no_LDPC.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/receive_no_LDPC.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transmit_no_LDPC.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.transmit.txt.icloud" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DMT_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/DMT_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Receive.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/Receive.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNR.bak" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNR.dat" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNR.dir" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.dir" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNR_receive.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNR_receive.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Transmit.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/Transmit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/audio_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/audio_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/channel_estimation_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/channel_estimation_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/channel_estimation_test_receive.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/channel_estimation_test_receive.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/channel_estimation_test_receive2.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/channel_estimation_test_receive2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/channel_estimation_test_send.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/channel_estimation_test_send.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error_rates.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/error_rates.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.bak" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/errors.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.dat" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/errors.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.db" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/errors.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.dir" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/errors.dir" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/errors.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ifft_timing_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/ifft_timing_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/impulse_estimation.py" beforeDir="false" afterPath="$PROJECT_DIR$/impulse_estimation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/impulses.db" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/impulses.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modulate_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/modulate_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psd_rec.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/psd_rec.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/receive_frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/receive_frame.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/synch_metric.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/synch_metric.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/synch_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/synch_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_receive.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/test_receive.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transmission_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/OLD/transmission_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transmit_frame.py" beforeDir="false" afterPath="$PROJECT_DIR$/transmit_frame.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transmitted_spectrum.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/transmitted_spectrum.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/waterfilling_real.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/waterfilling_real.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_input.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_input.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_output.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_output.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figures/waterfilling_real.png" beforeDir="false" afterPath="$PROJECT_DIR$/figures/waterfilling_real.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/receive_frame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/receive_frame.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shelve_files/SNR.bak" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shelve_files/SNR.dat" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shelve_files/SNR.dir" beforeDir="false" afterPath="$PROJECT_DIR$/shelve_files/SNR.dir" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_bits.txt" beforeDir="false" afterPath="$PROJECT_DIR$/start_bits.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_imag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/transmit_frame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/transmit_frame.txt" afterDir="false" />
     </list>
     <ignored path="Audio_Modem.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,76 +35,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/encoding_functions.py">
+        <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1005">
-              <caret line="68" selection-start-line="68" selection-end-line="68" />
+            <state relative-caret-position="75">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SNR_transmit.py">
+        <entry file="file://$PROJECT_DIR$/decoding_no_LDPC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="2775">
+              <caret line="185" column="44" selection-start-line="185" selection-start-column="44" selection-end-line="185" selection-end-column="44" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SNR_receive.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="105" column="10" lean-forward="true" selection-start-line="105" selection-start-column="10" selection-end-line="105" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/receive_frame.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1176">
-              <caret line="119" column="35" selection-start-line="119" selection-start-column="35" selection-end-line="119" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/transmit_frame.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="50" column="35" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/impulse_estimation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="117" column="39" selection-start-line="117" selection-start-column="39" selection-end-line="117" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -131,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_input.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+            <state relative-caret-position="179">
+              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -140,13 +67,46 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data_output.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="180">
+              <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/receive_no_LDPC.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="685">
+              <caret line="109" column="9" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/decoding_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1424">
+              <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/transmit_no_LDPC.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+              <folding>
+                <element signature="e#106#141#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -170,15 +130,18 @@
         <option value="$PROJECT_DIR$/decoding_functions.py" />
         <option value="$PROJECT_DIR$/receive_frame.txt" />
         <option value="$PROJECT_DIR$/SNR.py" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/SNR_transmit.py" />
         <option value="$PROJECT_DIR$/encoding_functions.py" />
-        <option value="$PROJECT_DIR$/data_input.py" />
-        <option value="$PROJECT_DIR$/data_output.py" />
         <option value="$PROJECT_DIR$/receive_frame.py" />
-        <option value="$PROJECT_DIR$/transmit_frame.py" />
         <option value="$PROJECT_DIR$/impulse_estimation.py" />
         <option value="$PROJECT_DIR$/SNR_receive.py" />
+        <option value="$PROJECT_DIR$/data_input.py" />
+        <option value="$PROJECT_DIR$/data_output.py" />
+        <option value="$PROJECT_DIR$/transmit_frame.py" />
+        <option value="$PROJECT_DIR$/decoding_no_LDPC.py" />
+        <option value="$PROJECT_DIR$/receive_no_LDPC.py" />
+        <option value="$PROJECT_DIR$/transmit_no_LDPC.py" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
@@ -391,20 +354,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="768" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32886904" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22619048" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22518519" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.2217262" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.21333334" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.21333334" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32886904" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -505,13 +469,6 @@
     <entry file="file://$PROJECT_DIR$/receive_frame.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/decoding_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/OLD/Receive.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1500">
@@ -555,33 +512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_input.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_output.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SNR_transmit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -592,14 +522,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/transmit_frame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="50" column="35" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/impulse_estimation.py">
+    <entry file="file://$PROJECT_DIR$/OLD/impulse_estimation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
           <caret line="117" column="39" selection-start-line="117" selection-start-column="39" selection-end-line="117" selection-end-column="39" />
@@ -619,10 +542,112 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/OLD/impulse.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/figures/waterfilling_real.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ldpcPy/ldpc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5800">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ldpc_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transmit_frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-135">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decoding_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1424">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/receive_frame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1176">
-          <caret line="119" column="35" selection-start-line="119" selection-start-column="35" selection-end-line="119" selection-end-column="35" />
+        <state relative-caret-position="60">
+          <caret line="83" selection-start-line="83" selection-end-line="114" selection-end-column="108" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_imag.bmp">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decoding_no_LDPC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2775">
+          <caret line="185" column="44" selection-start-line="185" selection-start-column="44" selection-end-line="185" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/receive_no_LDPC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="685">
+          <caret line="109" column="9" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transmit_no_LDPC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+          <folding>
+            <element signature="e#106#141#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/received_test_imag.bmp">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_output.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

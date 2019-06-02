@@ -11,7 +11,7 @@ def get_data(file):
 
     if file[-3:] == 'bmp':
         header = data[:54]
-        bmp = shelve.open('bmp')
+        bmp = shelve.open('./shelve_files/bmp')
         bmp['header'] = header
         bmp.close()
         data = data[54:]

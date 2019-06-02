@@ -10,7 +10,7 @@ def write_data(bits, file="received.txt"):
     data_out = bytes(int(byte) for byte in bits2bytes(bits))
 
     if file[-3:] == 'bmp':
-        bmp = shelve.open('bmp')
+        bmp = shelve.open('./shelve_files/bmp')
         header = bmp['header']
         bmp.close()
         data_out = header + data_out
