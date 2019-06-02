@@ -14,9 +14,6 @@ from config import *
 import shelve
 
 
-samples = channel.get_received(sigma=0.01, h = 1, ISI=True, file = "transmit_frame.txt")
-
-
 samples = []
 recorder_state = False
 record_buffer_length = 1000 # recording buffer length
