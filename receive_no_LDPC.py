@@ -48,23 +48,47 @@ p.terminate()
 
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
-sigstart, freq_offset = decode.Synch_framestart(samples_demod, int(frame_length/2))
-sigstart = sigstart-Lp
-print(sigstart)
+# sigstart, freq_offset = decode.Synch_framestart(samples_demod, int(frame_length/2))
+# sigstart = sigstart-Lp
+# print(sigstart)
+synch_centres = decode.get_synch_times(samples_demod,int(frame_length/2))
 
 
-blocks, residuals = decode.split_samples(samples[sigstart:],0,frame_length,Lp)
-estimation_frame = blocks[1]
-gains = decode.get_gains2(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs)
+# P = decode.Synch_P(samples_demod, int(frame_length/2))
+# R = decode.Synch_R(samples_demod, int(frame_length/2))
+# R = maximum_filter1d(R,300)
+# M = ((np.abs(P))**2)/(R**2)
+# plt.plot(M, label = 'M')
+# #plt.plot(abs(P), label = 'P')
+# #plt.plot(R, label = 'R')
+# # plt.plot(samples, label = 'signal')
+# plt.gca().legend()
+# plt.show()
 
-blocks = blocks[2:]
-residuals = residuals[2:]
-transmit_frames = len(blocks)
+block_length = 6 * frame_length_bits
+
+transmit_frames = 4 * frame_length_bits * len(synch_centres)
 
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
 
-for i in range(transmit_frames):
-	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,residuals[i])
+for i in range(len(synch_centres)):
+	blocks = np.zeros((6,frame_length_samples))
+	for j in range(6):
+		blocks[j] = samples[synch_centres[i] + frame_length_samples * j:synch_centres[i] + frame_length_samples * (j+1)]
+
+	# blocks, residuals = decode.split_samples(samples[sigstart:],0,frame_length,Lp)
+	estimation_frame = blocks[1]
+	gains = decode.get_gains2(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs)
+
+	blocks = blocks[2:]
+	# residuals = residuals[2:]
+
+	for j in range(4):
+		QAM_values[i*symbol_length* 4 + j * symbol_length:i*symbol_length*4 + (j+1) * symbol_length] = decode.OFDM(blocks[j], gains, symbol_length, Fc, dF, Fs)
+
+
+# for i in range(transmit_frames):
+# 	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(blocks[i],gains,symbol_length,Fc,dF,Fs)
 
 data_out = data_output.demodulate(QAM_values, QAM)
 

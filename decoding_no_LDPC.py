@@ -100,7 +100,7 @@ def Synch_R(signal, L):
     return R
 
 
-def longest_block(list_in, allowed_zeros=0):
+def longest_block(list_in, allowed_zeros=0, find_all=False):
     l = len(list_in)
     b_start = []
     b_end = []
@@ -127,8 +127,18 @@ def longest_block(list_in, allowed_zeros=0):
             b_start.append(i)
             b_end.append(this_end)
             b_length.append(this_length)
-    i = np.argmax(b_length);
-    return b_start[i], b_end[i], b_length[i]
+    if not find_all:
+        i = np.argmax(b_length);
+        return b_start[i], b_end[i], b_length[i]
+
+    else:
+        centres = []
+        for i in range(len(b_length)):
+            if b_length[i] > 100:
+                centres.append(int((b_end[i] - b_start[i])/2))
+        return centres
+
+
 
 
 def Synch_framestart(signal, L, spread=300, threshold=0.8):
@@ -141,6 +151,13 @@ def Synch_framestart(signal, L, spread=300, threshold=0.8):
     freq_offset = np.mean(np.angle(P[start:end]))
     return frame_start, freq_offset
 
+
+def get_synch_times(signal, L, spread=300, threshold=0.8):
+    P = Synch_P(signal, L)
+    R = Synch_R(signal, L)
+    R = maximum_filter1d(R, spread)
+    M = ((np.abs(P)) ** 2) / (R ** 2)
+    return longest_block((M>threshold), 0,True)
 
 def get_gains(estimation_frame, sent_spectrum, symbol_length, Lp, Fc,
               dF):
