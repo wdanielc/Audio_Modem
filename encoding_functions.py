@@ -64,11 +64,19 @@ def Synch_prefix(symbol_length,Lp,Fc,Fs,dF):
     return np.concatenate((out1,out2))
 
 
-def waterfilling(QAM_values, SNR, S, dF, symbol_length):
-    channel_noise_gains = np.divide(np.ones(symbol_length, SNR))
-    B = (1/symbol_length) * (S/dF + np.sum(channel_noise_gains)) # Need to find B properly, only area under B should be counted
+def waterfilling(QAM_values, SNR, B, dF, Fc, symbol_length):
+    channel_noise_gains = np.zeros(symbol_length)
+
+    for i in range(symbol_length):
+        channel_noise_gains[i] = np.mean(SNR[(Fc - int(symbol_length*dF/2))
+                                             + i * dF:(Fc - int(symbol_length*dF/2)) + (i + 1) * dF])
+        #print((Fc - int(symbol_length/2)) + i * dF)
+
+    channel_noise_gains = np.divide(np.ones(symbol_length), channel_noise_gains)
+    #B = np.mean(channel_noise_gains) + np.std(channel_noise_gains) * 3
+    channel_noise_gains = np.clip(channel_noise_gains,0,B)
 
     energies = B * np.ones(len(channel_noise_gains)) - channel_noise_gains
-    energies = np.clip(energies, 0, None) # Get rid of negative energies
+    #energies = np.clip(energies, 0, None) # Get rid of negative energies
 
     return QAM_values * np.sqrt(energies)

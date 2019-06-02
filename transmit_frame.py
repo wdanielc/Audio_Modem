@@ -15,6 +15,7 @@ import data_input as data
 import pyaudio as pa
 import wave
 #from config import *
+import shelve
 
 
 Fs = 44000
@@ -44,17 +45,22 @@ QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
 
+file = shelve.open('SNR')
+SNR = file['SNR']
+B = file['B']
+
 for i in range(transmit_frames):
-	#waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], Nf, Hf, 1, dF, symbol_length)
-	waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
+	waterfilled_QAM = encode.waterfilling(QAM_values[i * symbol_length:(i + 1) * symbol_length], SNR, B, dF, Fc, symbol_length)
+	#waterfilled_QAM = QAM_values[i * symbol_length:(i + 1) * symbol_length]
 	transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(waterfilled_QAM, Lp, Fc, Fs, dF)
 
 
 transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
 # Truncate to remove spikes from the signal
-transmit = np.clip(transmit,-0.1,0.1)
+lim = np.std(np.abs(transmit)) * 3
+transmit = np.clip(transmit,-lim,lim)
 transmit = transmit/max(abs(transmit))
-print(max(np.abs(transmit)), min(np.abs(transmit)), np.mean(np.abs(transmit)), np.std(np.abs(transmit)))
+#print(max(np.abs(transmit)), min(np.abs(transmit)), np.mean(np.abs(transmit)), np.std(np.abs(transmit)))
 
 
 with open("transmit_frame.txt", 'w') as fout:
