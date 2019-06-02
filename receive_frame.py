@@ -117,7 +117,7 @@ for i in range(transmit_frames):
 
 raw_LLRs = np.zeros(len(QAM_values)*2*QAM)
 
-file = shelve.open('SNR')
+file = shelve.open('./shelve_files/SNR')
 sigma2 = file['noise']
 
 
@@ -182,7 +182,7 @@ print('Error rate = ',np.sum(errors)/len(data_bits_out))
 
 data_output.write_data(data_bits_out, "receive_frame.txt")
 
-received = shelve.open("errors")
+received = shelve.open("./shelve_files/errors")
 #received['different'] = error_rates
 
 same = received['same']

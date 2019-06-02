@@ -65,7 +65,7 @@ print(noise)
 
 """
 
-file = shelve.open("SNR", writeback=True)
+file = shelve.open("./shelve_files/SNR", writeback=True)
 
 
 input('Press Enter when ready to record transmitted white noise')
@@ -101,6 +101,6 @@ plt.plot(np.arange(len(SNR)), B * np.ones(len(SNR)), linestyle='--', label='B')
 plt.legend(loc=1)
 #plt.ylim(0,100)
 plt.xlabel('Frequency')
-plt.savefig('waterfilling_real.png', dpi=300,bbox_inches='tight')
+plt.savefig('./figures/waterfilling_real.png', dpi=300,bbox_inches='tight')
 
 plt.show()

@@ -48,7 +48,7 @@ print(QAM_values[:10])
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
 
-file = shelve.open('SNR')
+file = shelve.open('./shelve_files/SNR')
 SNR = file['SNR']
 B = file['B']
 

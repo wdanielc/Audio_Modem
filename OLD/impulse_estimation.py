@@ -115,7 +115,7 @@ plt.ylabel('Response')
 
 plt.savefig("./impulse_responses/DPO.png", dpi=300, bbox_inches='tight')
 
-impulses = shelve.open('impulses')
+impulses = shelve.open('./shelve_files/impulses')
 impulses['DPO'] = samples
 
 with open("impulse.txt", 'w') as fout:
