@@ -82,16 +82,13 @@ plt.show()
 """
 
 samples_demod = decode.time_demodulate(samples,Fs,Fc) 							#find start of first synch block
-sigstart, freq_offset, edge_start = decode.Synch_framestart(samples_demod, int(frame_length/2))
+sigstart, phase_offset, edge_start = decode.Synch_framestart(samples_demod, int(frame_length/2))
 sigstart = sigstart-Lp
 print(sigstart)
 
-S = decode.get_freq_offset(samples_demod, freq_offset, dF, Fs, edge_start, frame_length, Lp, np.arange(-10,10));
-plt.figure()
-plt.plot(S)
-plt.show()
+freq_offset = decode.get_freq_offset(samples_demod, phase_offset, dF, Fs, edge_start, frame_length, Lp, np.arange(-10,10));
 
-blocks, residuals = decode.split_samples(samples[sigstart:],0,frame_length,Lp)
+blocks, residuals = decode.split_samples(samples[sigstart:],phase_offset,freq_offset,frame_length,Lp)
 estimation_frame = blocks[1:6]
 '''gains = np.zeros(symbol_length)
 

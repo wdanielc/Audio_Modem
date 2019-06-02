@@ -136,10 +136,10 @@ def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
 
     return np.divide(estimate_spectrum, sent_spectrum)
 
-def split_samples(signal,freq_offset,frame_length,Lp):
+def split_samples(signal,phase_offset,freq_offset,frame_length,Lp):
     frame_length_samples = frame_length + Lp
-    #sample_shift_per_frame = (frame_length_samples/frame_length)*(freq_offset/np.pi)
-    shifted_frame_length = frame_length_samples #+ sample_shift_per_frame
+    sample_shift_per_frame = (frame_length_samples/frame_length)*( freq_offset + (phase_offset/np.pi) )
+    shifted_frame_length = frame_length_samples + sample_shift_per_frame
     n = int(np.ceil(len(signal)/shifted_frame_length))
     signal = np.append(signal,np.zeros(int(np.floor(shifted_frame_length))))
     frame = 0
@@ -199,8 +199,7 @@ def get_freq_offset(signal, phase_offset, dF, Fs, start, frame_length, Lp, offse
         this_L = frame_length + offsets[i]
         this_Lp = Lp * (this_L / frame_length)
         S[i] = test_offset(signal_corrected, start, this_L, this_Lp)
-    i_max = np.argmax(S)
-    return S
+    return offsets[np.argmax(S)]
 
 
 
