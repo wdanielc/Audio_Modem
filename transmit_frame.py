@@ -39,6 +39,7 @@ with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
 		fout.write(str(value) + '\n')
 code_bits = ldpc_functions.encode(data_bits, standard = '802.16', rate = '2/3',  ptype='A' )
+print(code_bits[:10])
 transmit_frames = int(np.ceil(len(code_bits)/frame_length_bits))
 frame_length_samples = int(Fs/dF) + Lp
 

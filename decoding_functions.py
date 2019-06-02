@@ -64,7 +64,6 @@ def QAM_LLR(QAM_value, QAM, sigma2): #sigma2 corresponds to noise variance in QA
                 ones += Likelihoods[k]
             else:
                 zeros += Likelihoods[k]
-        print(zeros,ones)
         zeros = np.log(zeros)
         ones = np.log(ones)
         LLRs[i] = zeros - ones
@@ -208,8 +207,7 @@ def get_freq_offset(signal, phase_offset, dF, Fs, start, frame_length, Lp, offse
 def get_noisevar(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs, gains):
     estimate_spectrum = OFDM2(estimation_frame, np.ones(symbol_length), symbol_length,Fc,dF,Fs,0)
     scaled_estimate_spectrum = np.divide(estimate_spectrum, gains)
-    print(estimate_spectrum,sent_spectrum)
-    var = np.square(np.absolute(np.subtract(estimate_spectrum, sent_spectrum)))
+    var = np.square(np.absolute(np.subtract(scaled_estimate_spectrum, sent_spectrum)))
     return var
 
 
