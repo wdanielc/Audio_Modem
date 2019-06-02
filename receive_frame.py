@@ -102,8 +102,11 @@ for i in range(transmit_frames):
 
 raw_LLRs = np.zeros(len(QAM_values)*2*QAM)
 
+file = shelve.open('SNR')
+sigma2 = file['noise']
+
 for i in range(len(QAM_values)):
-	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, sigma2)
+	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, sigma2[i % symbol_length])
 
 
 data_bits_out = ldpc_functions.decode(raw_LLRs, standard = '802.16', rate = '2/3',  ptype='A' )
