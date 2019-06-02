@@ -98,15 +98,21 @@ transmit_frames = len(blocks)
 QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
 
 for i in range(transmit_frames):
-	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,residuals[i])
+	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,0)
 
 raw_LLRs = np.zeros(len(QAM_values)*2*QAM)
 
 file = shelve.open('SNR')
 sigma2 = file['noise']
 
+print(QAM_values[:10])
+for i in range(10):
+	print(0.5/abs(gains[i % symbol_length]))
+
 for i in range(len(QAM_values)):
-	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, sigma2[i % symbol_length])
+	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, 0.5/abs(gains[i % symbol_length]))
+
+print(raw_LLRs[:10])
 
 
 data_bits_out = ldpc_functions.decode(raw_LLRs, standard = '802.16', rate = '2/3',  ptype='A' )

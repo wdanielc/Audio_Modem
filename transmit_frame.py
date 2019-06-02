@@ -43,7 +43,7 @@ transmit_frames = int(np.ceil(len(code_bits)/frame_length_bits))
 frame_length_samples = int(Fs/dF) + Lp
 
 QAM_values = data.modulate(code_bits, QAM, frame_length_bits)
-
+print(QAM_values[:10])
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
 
@@ -57,8 +57,17 @@ for i in range(transmit_frames):
 	transmit[i * frame_length_samples: (i+1) * frame_length_samples] = encode.OFDM(waterfilled_QAM, Lp, Fc, Fs, dF)
 
 
+rand2 = encode.randQAM(symbol_length)[1]
+out2 = encode.OFDM(rand2,Lp,Fc,Fs,dF)
+out2 = out*4
+
+transmit = np.insert(transmit,0,out2) #so we have 5 gain estimation blocks
+
+transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
+
 transmit = np.insert(transmit,0,encode.Synch_prefix(symbol_length,Lp,Fc,Fs,dF))
 # Truncate to remove spikes from the signal
+
 lim = np.std(np.abs(transmit)) * 3
 transmit = np.clip(transmit,-lim,lim)
 transmit = transmit/max(abs(transmit))

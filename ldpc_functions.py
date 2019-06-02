@@ -16,6 +16,7 @@ def decode(LLRs, standard = '802.11n', rate = '1/2',  ptype='A'):
 	NoverZ = GetNKoverZ(False, standard, rate,  ptype)
 	KoverZ = GetNKoverZ(True, standard, rate,  ptype)
 	z = int(len(LLRs)/NoverZ)
+	LLRs = LLRs[:NoverZ*z]
 	c = ldpc.code(standard = standard, rate = rate, z=z, ptype=ptype)
 	app, it = c.decode(LLRs, 'sumprod2')
 	MLValues = np.vectorize(MLValue)

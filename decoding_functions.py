@@ -64,6 +64,7 @@ def QAM_LLR(QAM_value, QAM, sigma2): #sigma2 corresponds to noise variance in QA
                 ones += Likelihoods[k]
             else:
                 zeros += Likelihoods[k]
+        print(zeros,ones)
         zeros = np.log(zeros)
         ones = np.log(ones)
         LLRs[i] = zeros - ones
