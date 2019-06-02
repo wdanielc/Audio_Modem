@@ -12,6 +12,7 @@ import pyaudio as pa
 from scipy.ndimage.filters import maximum_filter1d
 #from config import *
 import shelve
+import ldpc_functions
 
 
 Fs = 44000
@@ -99,7 +100,13 @@ QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
 for i in range(transmit_frames):
 	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM2(blocks[i],gains,symbol_length,Fc,dF,Fs,residuals[i])
 
-data_out = data_output.demodulate(QAM_values, QAM)
+raw_LLRs = np.zeros(len(QAM_values)*2*QAM)
+
+for i in range(len(QAM_values)):
+	raw_LLRs[i*2*QAM:(i+1)*2*QAM] = decode.QAM_LLR(QAM_values[i], QAM, sigma2)
+
+
+data_bits_out = ldpc_functions.decode(raw_LLRs, standard = '802.16', rate = '2/3',  ptype='A' )
 
 """ OLD DEDCODING
 estimation_frame = samples[sigstart + frame_length:sigstart + 2*frame_length + Lp]						#slice out second synch block
@@ -130,28 +137,28 @@ with open("start_bits.txt", 'r') as fin:
 
 transmitted = np.delete(transmitted, -1)
 
-if len(transmitted) < len(data_out):
-	data_out = data_out[:len(transmitted)]
-elif len(transmitted) > len(data_out):
-	data_out = np.concatenate((data_out,np.zeros((len(transmitted)-len(data_out)))))
+if len(transmitted) < len(data_bits_out):
+	data_bits_out = data_bits_out[:len(transmitted)]
+elif len(transmitted) > len(data_bits_out):
+	data_bits_out = np.concatenate((data_bits_out,np.zeros((len(transmitted)-len(data_bits_out)))))
 
 transmitted = np.array(transmitted, dtype = int)
-data_out = np.array(data_out, dtype = int)#[:len(transmitted)]
+data_bits_out = np.array(data_bits_out, dtype = int)#[:len(transmitted)]
 
 error_rates = np.zeros(len(transmitted))
 errors = 0
 
 for i in range(len(transmitted)):
-	errors += np.bitwise_xor(transmitted[i],data_out[i])
+	errors += np.bitwise_xor(transmitted[i],data_bits_out[i])
 	error_rates[i] = errors/(i+1)
 
 plt.figure()
 plt.plot(error_rates)
 
-errors = np.bitwise_xor(transmitted,data_out)
-print('Error rate = ',np.sum(errors)/len(data_out))
+errors = np.bitwise_xor(transmitted,data_bits_out)
+print('Error rate = ',np.sum(errors)/len(data_bits_out))
 
-data_output.write_data(data_out, "receive_frame.txt")
+data_output.write_data(data_bits_out, "receive_frame.txt")
 
 received = shelve.open("errors")
 #received['different'] = error_rates

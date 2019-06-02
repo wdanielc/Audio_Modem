@@ -16,6 +16,7 @@ import pyaudio as pa
 import wave
 #from config import *
 import shelve
+import ldpc_functions
 
 
 Fs = 44000
@@ -37,10 +38,11 @@ data_bits = data.get_data("hamlet_semiabridged.txt")#[:1000*frame_length_bits]
 with open("start_bits.txt", 'w') as fout:
 	for value in data_bits:
 		fout.write(str(value) + '\n')
-transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
+code_bits = ldpc_functions.encode(data_bits, standard = '802.16', rate = '2/3',  ptype='A' )
+transmit_frames = int(np.ceil(len(code_bits)/frame_length_bits))
 frame_length_samples = int(Fs/dF) + Lp
 
-QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
+QAM_values = data.modulate(code_bits, QAM, frame_length_bits)
 
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
