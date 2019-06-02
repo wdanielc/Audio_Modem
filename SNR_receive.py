@@ -8,7 +8,6 @@ from config import *
 import shelve
 import time
 
-symbol_length = 1024
 recorder_state = False
 record_buffer_length = 1000 # recording buffer length
 duration = 5
@@ -94,9 +93,6 @@ file['B'] = B
 file['SNR'] = SNR
 
 file.close()
-
-plt.figure()
-plt.plot(noise)
 
 plt.figure()
 #plt.plot(np.arange(int(len(SNR)/2))/5, SNR[:int(len(SNR)/2)])
