@@ -130,7 +130,7 @@ def Synch_framestart(signal,L,spread=300,threshold=0.8):
     start, end = longest_block((M>threshold),0)[:2]
     frame_start = int((start+end)/2)
     freq_offset = np.mean(np.angle(P[start:end]))
-    return frame_start, freq_offset
+    return frame_start, freq_offset, end
 
 def get_gains(estimation_frame, sent_spectrum,symbol_length,Lp,Fc,dF):
     estimate_spectrum = OFDM(estimation_frame, np.ones(symbol_length), symbol_length,Lp,Fc,dF)
@@ -169,12 +169,39 @@ def OFDM2(received,gains,symbol_length,Fc,dF,Fs,residual):
     symbol = np.divide(scaled_symbol,gains)
     return symbol
 
-def get_gains2(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs):
-    estimate_spectrum = OFDM2(estimation_frame, np.ones(symbol_length), symbol_length,Fc,dF,Fs,0)
+def get_gains2(estimation_frame, sent_spectrum,symbol_length,Fc,dF,Fs, residual):
+    estimate_spectrum = OFDM2(estimation_frame, np.ones(symbol_length), symbol_length,Fc,dF,Fs,residual)
 
     return np.divide(estimate_spectrum, sent_spectrum)
 
+def triang(l):
+    L = int(np.ceil(l))
+    t = np.arange(-L,0) / l
+    t = 1 + t
+    t = t/np.sum(t)
+    return t
 
+def test_offset(signal, start, L, Lp):
+    P = np.conj(signal[:-L]) * signal[L:]
+    reps = int(np.floor((len(signal)-start)/(L+Lp)))
+    S = 0
+    for i in range(reps):
+        this_end = start + int(np.floor(i*(L + Lp)))
+        this_start = this_end - int(np.ceil(Lp))
+        S += ( P[this_start:this_end] * triang(Lp) ) 
+    return
+
+def get_freq_offset(signal, phase_offset, dF, Fs, start, frame_length, Lp, offsets):
+    phases = -2j * phase_offset * np.arange(len(signal)) * (dF / Fs)
+    phases = np.exp(phases)
+    signal_corrected = signal * phases
+    S = np.zeros(len(offsets))
+    for i in range(len(offsets)):
+        this_L = frame_length + offsets[i]
+        this_Lp = Lp * (this_L / frame_length)
+        S[i] = test_offset(signal_corrected, start, this_L, this_Lp)
+    i_max = np.argmax(S)
+    return S
 
 
 
