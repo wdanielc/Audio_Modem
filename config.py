@@ -3,7 +3,7 @@
 # General variables
 volume = 1.0 # Playback volume
 
-filename = "hamlet_semiabridged.txt"
+filename = "test_imag.bmp"
 # Modulation_type_OFDM = True  #True for OFDM, False for DMT
 Fs = 44000
 dF = 16

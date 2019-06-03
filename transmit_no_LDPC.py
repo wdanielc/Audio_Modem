@@ -5,6 +5,7 @@ Created on Mon May 13 14:15:46 2019
 @author: wdc24
 """
 import encoding_functions as encode
+import decoding_no_LDPC as decode
 import audio_functions as audio
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,7 +27,7 @@ transmit_frames = int(np.ceil(len(data_bits)/frame_length_bits))
 frame_length_samples = int(Fs/dF) + Lp
 
 QAM_values = data.modulate(data_bits, QAM, frame_length_bits)
-print(QAM_values[:20])
+print(len(QAM_values))
 
 
 transmit = np.zeros(transmit_frames * frame_length_samples, dtype = np.float32)
@@ -49,6 +50,8 @@ lim = np.std(np.abs(transmit)) * 3
 transmit = np.clip(transmit,-lim,lim)
 transmit = transmit/max(abs(transmit))
 #print(max(np.abs(transmit)), min(np.abs(transmit)), np.mean(np.abs(transmit)), np.std(np.abs(transmit)))
+
+
 
 
 with open("transmit_frame.txt", 'w') as fout:

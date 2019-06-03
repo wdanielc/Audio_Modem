@@ -75,21 +75,22 @@ QAM_values = np.zeros((transmit_frames*symbol_length), dtype = np.complex)
 print(len(QAM_values))
 
 for i in range(len(synch_centres)):
-	blocks = np.zeros((6,frame_length_samples))
-	for j in range(6):
-		blocks[j,:] = samples[synch_centres[i] + frame_length_samples * j:synch_centres[i] + frame_length_samples * (j+1)]
+	blocks, residuals = decode.split_samples(samples[synch_centres[i]:synch_centres[i]+block_length],0,frame_length,Lp)
+	print(blocks.shape)
 
-	# blocks, residuals = decode.split_samples(samples[sigstart:],0,frame_length,Lp)
-	estimation_frame = blocks[1,:]
+	estimation_frame = blocks[1]
 	gains = decode.get_gains2(estimation_frame,encode.randQAM(symbol_length)[1],symbol_length,Fc,dF,Fs)
 
-	blocks = blocks[2:,:]
-	# residuals = residuals[2:]
+	blocks = blocks[2:]
+	residuals = residuals[2:]
 
-	for j in range(4):
-		QAM_values[i*symbol_length* 4 + j * symbol_length:i*symbol_length*4 + (j+1) * symbol_length] = decode.OFDM(blocks[j,:], gains, symbol_length, Lp, Fc, dF)
+	QAM_values_i = np.zeros((4*symbol_length), dtype = np.complex)
 
-print(QAM_values[:20])
+	for k in range(4):
+		QAM_values_i[k*symbol_length:(k+1)*symbol_length] = decode.OFDM2(blocks[k],gains,symbol_length,Fc,dF,Fs,residuals[k])
+
+	QAM_values[i*4*symbol_length:(i+1)*4*symbol_length] = QAM_values_i
+
 # for i in range(transmit_frames):
 # 	QAM_values[i*symbol_length:(i+1)*symbol_length] = decode.OFDM(blocks[i],gains,symbol_length,Fc,dF,Fs)
 
